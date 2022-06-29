@@ -1,12 +1,11 @@
 
+geradortela1_1();
 function limpatela() {
-    let tela = document.querySelector(".TodasasTelas");
-    tela.innerHTML = `
-    <div class="tela1-1"></div>
-    <div class="tela1-2"><div>`
+    let tela = document.querySelector("body");
+    tela.innerHTML = ``
 }
-function geradortela1 () {
-    let tela = document.querySelector(".tela1-1");
+function geradortela1_1 () {
+    let tela = document.querySelector("body");
     tela.innerHTML = `
     <div class="topo">BuzzQuizz</div>
     <div class="semquizz">
@@ -42,8 +41,8 @@ function geradortela1 () {
     </div>`
 }
 
-function geradortela2 () {
-    let tela = document.querySelector(".tela1-2");
+function geradortela1_2 () {
+    let tela = document.querySelector("body");
     tela.innerHTML = `
     <div class="topo">BuzzQuizz</div>
       <div class="comquizz">
@@ -105,4 +104,20 @@ function geradortela2 () {
           <div>Pensa num titulo que ta maneiro</div>
         </div>
       </div>`
+}
+function criarquizz() {
+  limpatela();
+  let tela = document.querySelector("body");
+  tela.innerHTML = `
+  <div class="tela3">
+  <div class="topo">BuzzQuizz</div>
+    <div>Comece pelo começo</div>
+    <div class="personalizacao">
+      <input type="text" placeholder="     Título do seu quizz">
+      <input type="text" placeholder="     URL da imagem do seu quizz">
+      <input type="text" placeholder="     Quantidade de perguntas do quizz">
+      <input type="text" placeholder="     Quantidade de níveis do quizz">
+    </div>
+  <div onclick="criarperguntas()"><button>Prosseguir pra criar perguntas</button></div>
+  </div>`
 }
