@@ -225,6 +225,18 @@ function escolhernivel() {
 
 function sucessocriacao() {
   limpatela ();
+  tela.innerHTML += `
+  <div class="tela3_4">
+        <span>Seu quizz está pronto!</span>
+        <div class="quizz">
+            <img
+              src="https://thumbs.dreamstime.com/b/fundo-azul-claro-com-brilho-e-c%C3%ADrculos-ilustra%C3%A7%C3%A3o-do-vetor-de-divers%C3%A3o-inverno-para-cartaz-festa-cart%C3%B5es-ano-novo-natal-160774554.jpg"
+            />
+            <div>Pensa num titulo que ta maneiro</div>
+        </div>
+        <div onclick="exibirquizz()"><button>Acessar Quizz</button></div>
+        <div class="botaohome" onclick="todosquizzes()"><button>Voltar pra Home</button></div>
+    </div>`
 }
 
 function exibirquizz(){
