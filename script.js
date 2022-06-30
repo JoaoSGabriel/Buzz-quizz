@@ -1,10 +1,22 @@
 
 let tela = document.querySelector("body");
-geradortela1_1();
+let quizzaleatorio;
+todosquizzes ();
 
 function limpatela() {
     tela.innerHTML = `<div class="topo">BuzzQuizz</div>`
 }
+
+function todosquizzes () {
+  const promisse = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes");
+  promisse.then(selecionaquizz);
+}
+
+function selecionaquizz(resposta) {
+  quizzaleatorio = resposta.data;
+  geradortela1_1();
+}
+
 function geradortela1_1 () {
   limpatela();
   tela.innerHTML += `
@@ -13,32 +25,18 @@ function geradortela1_1 () {
       <div onclick="criarquizz()"><button>Criar Quizz</button></div>
   </div>
   <div class="quizzes">
-      <p>Todos os Quizzes</p>
-      <div class="quizz" onclick="exibirquizz()">
-          <img src="https://thumbs.dreamstime.com/b/fundo-azul-claro-com-brilho-e-c%C3%ADrculos-ilustra%C3%A7%C3%A3o-do-vetor-de-divers%C3%A3o-inverno-para-cartaz-festa-cart%C3%B5es-ano-novo-natal-160774554.jpg"/>
-          <div>Pensa num titulo que ta maneiro</div>
-      </div>
-      <div class="quizz" onclick="exibirquizz()">
-          <img src="https://thumbs.dreamstime.com/b/fundo-azul-claro-com-brilho-e-c%C3%ADrculos-ilustra%C3%A7%C3%A3o-do-vetor-de-divers%C3%A3o-inverno-para-cartaz-festa-cart%C3%B5es-ano-novo-natal-160774554.jpg"/>
-          <div>Pensa num titulo que ta maneiro</div>
-      </div>
-      <div class="quizz" onclick="exibirquizz()">
-          <img src="https://thumbs.dreamstime.com/b/fundo-azul-claro-com-brilho-e-c%C3%ADrculos-ilustra%C3%A7%C3%A3o-do-vetor-de-divers%C3%A3o-inverno-para-cartaz-festa-cart%C3%B5es-ano-novo-natal-160774554.jpg"/>
-          <div>Pensa num titulo que ta maneiro</div>
-      </div>
-      <div class="quizz" onclick="exibirquizz()">
-          <img src="https://thumbs.dreamstime.com/b/fundo-azul-claro-com-brilho-e-c%C3%ADrculos-ilustra%C3%A7%C3%A3o-do-vetor-de-divers%C3%A3o-inverno-para-cartaz-festa-cart%C3%B5es-ano-novo-natal-160774554.jpg"/>
-          <div>Pensa num titulo que ta maneiro</div>
-      </div>
-      <div class="quizz" onclick="exibirquizz()">
-          <img src="https://thumbs.dreamstime.com/b/fundo-azul-claro-com-brilho-e-c%C3%ADrculos-ilustra%C3%A7%C3%A3o-do-vetor-de-divers%C3%A3o-inverno-para-cartaz-festa-cart%C3%B5es-ano-novo-natal-160774554.jpg"/>
-          <div>Pensa num titulo que ta maneiro</div>
-      </div>
-      <div class="quizz" onclick="exibirquizz()">
-          <img src="https://thumbs.dreamstime.com/b/fundo-azul-claro-com-brilho-e-c%C3%ADrculos-ilustra%C3%A7%C3%A3o-do-vetor-de-divers%C3%A3o-inverno-para-cartaz-festa-cart%C3%B5es-ano-novo-natal-160774554.jpg"/>
-          <div>Pensa num titulo que ta maneiro</div>
-      </div>
-  </div>`
+    <p>Todos os Quizzes</p>
+  </div>`;
+  
+  for (i = 0; i < 6; i++) {
+    let n = parseInt(Math.random()* quizzaleatorio.length);
+    let cadaquizz = document.querySelector(".quizzes")
+    cadaquizz.innerHTML += 
+      `<div class="quizz" onclick="exibirquizz()">
+          <img src="${quizzaleatorio[n].image}"/>
+          <div>${quizzaleatorio[n].title}</div>
+      </div>`
+  }
 }
 
 function geradortela1_2 () {
@@ -66,43 +64,17 @@ function geradortela1_2 () {
   </div>
   <div class="quizzes">
     <p>Todos os Quizzes</p>
-    <div class="quizz" onclick="exibirquizz()">
-      <img
-        src="https://thumbs.dreamstime.com/b/fundo-azul-claro-com-brilho-e-c%C3%ADrculos-ilustra%C3%A7%C3%A3o-do-vetor-de-divers%C3%A3o-inverno-para-cartaz-festa-cart%C3%B5es-ano-novo-natal-160774554.jpg"
-      />
-      <div>Pensa num titulo que ta maneiro</div>
-    </div>
-    <div class="quizz" onclick="exibirquizz()">
-      <img
-        src="https://thumbs.dreamstime.com/b/fundo-azul-claro-com-brilho-e-c%C3%ADrculos-ilustra%C3%A7%C3%A3o-do-vetor-de-divers%C3%A3o-inverno-para-cartaz-festa-cart%C3%B5es-ano-novo-natal-160774554.jpg"
-      />
-      <div>Pensa num titulo que ta maneiro</div>
-    </div>
-    <div class="quizz" onclick="exibirquizz()">
-      <img
-        src="https://thumbs.dreamstime.com/b/fundo-azul-claro-com-brilho-e-c%C3%ADrculos-ilustra%C3%A7%C3%A3o-do-vetor-de-divers%C3%A3o-inverno-para-cartaz-festa-cart%C3%B5es-ano-novo-natal-160774554.jpg"
-      />
-      <div>Pensa num titulo que ta maneiro</div>
-    </div>
-    <div class="quizz" onclick="exibirquizz()">
-      <img
-        src="https://thumbs.dreamstime.com/b/fundo-azul-claro-com-brilho-e-c%C3%ADrculos-ilustra%C3%A7%C3%A3o-do-vetor-de-divers%C3%A3o-inverno-para-cartaz-festa-cart%C3%B5es-ano-novo-natal-160774554.jpg"
-      />
-      <div>Pensa num titulo que ta maneiro</div>
-    </div>
-    <div class="quizz" onclick="exibirquizz()">
-      <img
-        src="https://thumbs.dreamstime.com/b/fundo-azul-claro-com-brilho-e-c%C3%ADrculos-ilustra%C3%A7%C3%A3o-do-vetor-de-divers%C3%A3o-inverno-para-cartaz-festa-cart%C3%B5es-ano-novo-natal-160774554.jpg"
-      />
-      <div>Pensa num titulo que ta maneiro</div>
-    </div>
-    <div class="quizz" onclick="exibirquizz()">
-      <img
-        src="https://thumbs.dreamstime.com/b/fundo-azul-claro-com-brilho-e-c%C3%ADrculos-ilustra%C3%A7%C3%A3o-do-vetor-de-divers%C3%A3o-inverno-para-cartaz-festa-cart%C3%B5es-ano-novo-natal-160774554.jpg"
-      />
-      <div>Pensa num titulo que ta maneiro</div>
-    </div>
   </div>`
+
+  for (i = 0; i < 6; i++) {
+    let n = parseInt(Math.random()* quizzaleatorio.length);
+    let cadaquizz = document.querySelector(".quizzes")
+    cadaquizz.innerHTML += 
+      `<div class="quizz" onclick="exibirquizz()">
+          <img src="${quizzaleatorio[n].image}"/>
+          <div>${quizzaleatorio[n].title}</div>
+      </div>`
+  }
 }
 function criarquizz() {
   limpatela();
