@@ -144,7 +144,10 @@ body {
 }
 
 /* organização da tela3 */
-.tela3 {
+.tela3,
+.tela3_2,
+.tela3_3,
+.tela3_4 {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -168,7 +171,7 @@ body {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
 }
 
-.personalizacao input {
+input {
     width: 560px;
     height: 44px;
     border: solid 1px #D1D1D1;
@@ -179,7 +182,7 @@ body {
     font-style: italic;
 }
 
-.personalizacao input::placeholder{
+input::placeholder{
     font-size: 19px;
     font-weight: 400;
     line-height: 23px;
@@ -188,16 +191,19 @@ body {
     margin-left: 15px;
 }
 
-.personalizacao input:focus{
+input:focus{
     box-shadow: 0 0 0 0;
     outline: 0;
 }
 
-.tela3 button{
+.tela3 button,
+.tela3_2 button,
+.tela3_3 button,
+.tela3_4 button{
     background-color: #EC362D;
     width: 369px;
     height: 54px;
-    margin: 85px 0 0 0;
+    margin: 85px 0 20px 0;
     border-radius: 15px;
     cursor: pointer;
     border: none;
@@ -205,6 +211,18 @@ body {
     font-weight: 400;
     line-height: 25px;
     color: #FFF5F4;
+}
+
+.tela3_2 button{
+    width: 354px;
+}
+
+.tela3_3 button{
+    width: 324px;
+}
+
+.tela3_4 button {
+    width: 260px;
 }
 
 .titulo-quizz {
@@ -290,6 +308,96 @@ body {
     font-size: 20px;
 }
 
+/* criação do quizz*/
+.tela3_2 span,
+.tela3_3 span,
+.tela3_4 span{
+    color: #000000;
+    font-size: 23px;
+    font-weight: 700;
+    line-height: 27px;
+    margin: 63px 0 36px 0;
+}
+.caixadepergunta {
+    width: 600px;
+    height: 825px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.caixadepergunta p{
+    color: #000000;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+}
+
+.perguntanumero,
+.caixarespcerta {
+    width: 564px;
+    height: 141px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 28px 0 0 0;
+}
+
+.caixaresperrada {
+    width: 564px;
+    margin-top: 28px;
+}
+
+.caixaresperrada p{
+    margin-bottom: 14px;
+}
+
+.caixaresperrada div{
+    height: 106px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 32px;
+}
+
+.caixaniveis {
+    width: 600px;
+    height: 316px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #FFFFFF;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 24px;
+}
+
+.niveis{
+    width: 564px;
+    height: 261px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.niveis div:nth-child(1) {
+    color: #000000;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+}
+
+.botaohome button{
+    font-size: 21px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #818181;
+    margin: 9px 0 0 0;
+    background-color: #FAFAFA;
+}
 @media (max-width: 1100px) {
 
 }
