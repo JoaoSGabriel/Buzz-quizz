@@ -8,7 +8,7 @@ function limpatela() {
 }
 
 function todosquizzes () {
-  const promisse = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes");
+  const promisse = axios.get("https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes");
   promisse.then(selecionaquizz);
 }
 
@@ -41,6 +41,8 @@ function geradortela1_1 () {
 
 function geradortela1_2 () {
   limpatela();
+  //let userquizz = localstorage.getItem("quizz");
+  //let quizzproprio = JSON.parse(userquizz);
   tela.innerHTML += `
   <div class="comquizz">
     <div class="navbar">
@@ -82,13 +84,107 @@ function criarquizz() {
   <div class="tela3">
     <div>Comece pelo começo</div>
     <div class="personalizacao">
-      <input type="text" placeholder="     Título do seu quizz">
-      <input type="text" placeholder="     URL da imagem do seu quizz">
-      <input type="text" placeholder="     Quantidade de perguntas do quizz">
-      <input type="text" placeholder="     Quantidade de níveis do quizz">
+      <input class="title" type="text" placeholder="     Título do seu quizz">
+      <input class="image" type="text" placeholder="     URL da imagem do seu quizz">
+      <input class="Npergunta" type="text" placeholder="     Quantidade de perguntas do quizz">
+      <input class="Nnivel" type="text" placeholder="     Quantidade de níveis do quizz">
     </div>
   <div onclick="criarperguntas()"><button>Prosseguir pra criar perguntas</button></div>
   </div>`
+}
+
+function criarperguntas() {
+  limpatela();
+  tela.innerHTML += `
+  <div class="tela3_2">
+        <span>Crie suas perguntas</span>
+        <div class="caixadepergunta">
+            <div class="perguntanumero">
+                <p>Pergunta 1</p>
+                <input type="text" placeholder="   Texto da pergunta">
+                <input type="text" placeholder="   Cor de fundo da pergunta">
+            </div>
+            <div class="caixarespcerta">
+                <p>Resposta correta</p>
+                <input type="text" placeholder="   Resposta Correta">
+                <input type="text" placeholder="   URL da imagem">
+            </div>
+            <div class="caixaresperrada">
+                <p>Respostas incorretas</p>
+                <div>
+                    <input type="text" placeholder="   Resposta incorreta 1">
+                    <input type="text" placeholder="   URL da imagem 1">
+                </div>
+                <div>
+                    <input type="text" placeholder="   Resposta incorreta 2">
+                    <input type="text" placeholder="   URL da imagem 2">
+                </div>
+                <div>
+                    <input type="text" placeholder="   Resposta incorreta 3">
+                    <input type="text" placeholder="   URL da imagem 3">
+                </div>
+            </div>
+        </div>
+        <div class="caixadepergunta">
+            <div class="perguntanumero">
+                <p>Pergunta 1</p>
+                <input type="text" placeholder="   Texto da pergunta">
+                <input type="text" placeholder="   Cor de fundo da pergunta">
+            </div>
+            <div class="caixarespcerta">
+                <p>Resposta correta</p>
+                <input type="text" placeholder="   Resposta Correta">
+                <input type="text" placeholder="   URL da imagem">
+            </div>
+            <div class="caixaresperrada">
+                <p>Respostas incorretas</p>
+                <div>
+                    <input type="text" placeholder="   Resposta incorreta 1">
+                    <input type="text" placeholder="   URL da imagem 1">
+                </div>
+                <div>
+                    <input type="text" placeholder="   Resposta incorreta 2">
+                    <input type="text" placeholder="   URL da imagem 2">
+                </div>
+                <div>
+                    <input type="text" placeholder="   Resposta incorreta 3">
+                    <input type="text" placeholder="   URL da imagem 3">
+                </div>
+            </div>
+        </div>
+        <div class="caixadepergunta">
+            <div class="perguntanumero">
+                <p>Pergunta 1</p>
+                <input type="text" placeholder="   Texto da pergunta">
+                <input type="text" placeholder="   Cor de fundo da pergunta">
+            </div>
+            <div class="caixarespcerta">
+                <p>Resposta correta</p>
+                <input type="text" placeholder="   Resposta Correta">
+                <input type="text" placeholder="   URL da imagem">
+            </div>
+            <div class="caixaresperrada">
+                <p>Respostas incorretas</p>
+                <div>
+                    <input type="text" placeholder="   Resposta incorreta 1">
+                    <input type="text" placeholder="   URL da imagem 1">
+                </div>
+                <div>
+                    <input type="text" placeholder="   Resposta incorreta 2">
+                    <input type="text" placeholder="   URL da imagem 2">
+                </div>
+                <div>
+                    <input type="text" placeholder="   Resposta incorreta 3">
+                    <input type="text" placeholder="   URL da imagem 3">
+                </div>
+            </div>
+        </div>
+        <div onclick="escolhernivel()"><button>Prosseguir pra criar perguntas</button></div>
+    </div>`
+}
+
+function escolhernivel() {
+  limpatela();
 }
 
 function exibirquizz(){
