@@ -144,7 +144,8 @@ body {
 
 /* organização da tela3 */
 .tela3,
-.tela3_2 {
+.tela3_2,
+.tela3_3 {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -194,7 +195,8 @@ input:focus{
 }
 
 .tela3 button,
-.tela3_2 button{
+.tela3_2 button,
+.tela3_3 button{
     background-color: #EC362D;
     width: 369px;
     height: 54px;
@@ -210,6 +212,10 @@ input:focus{
 
 .tela3_2 button{
     width: 354px;
+}
+
+.tela3_3 button{
+    width: 324px;
 }
 
 .titulo-quizz {
@@ -296,7 +302,8 @@ input:focus{
 }
 
 /* criação do quizz*/
-.tela3_2 span{
+.tela3_2 span,
+.tela3_3 span{
     color: #000000;
     font-size: 23px;
     font-weight: 700;
@@ -348,6 +355,32 @@ input:focus{
     margin-bottom: 32px;
 }
 
+.caixaniveis {
+    width: 600px;
+    height: 316px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #FFFFFF;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 24px;
+}
+
+.niveis{
+    width: 564px;
+    height: 261px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.niveis div:nth-child(1) {
+    color: #000000;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+}
 @media (max-width: 1100px) {
 
 }

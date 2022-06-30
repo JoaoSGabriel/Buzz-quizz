@@ -14,7 +14,11 @@ function todosquizzes () {
 
 function selecionaquizz(resposta) {
   quizzaleatorio = resposta.data;
-  geradortela1_1();
+  if (localStorage.length == 0){
+    geradortela1_1 ();
+  } else {
+  geradortela1_2 ();
+  }
 }
 
 function geradortela1_1 () {
@@ -185,6 +189,42 @@ function criarperguntas() {
 
 function escolhernivel() {
   limpatela();
+  tela.innerHTML += `
+  <div class="tela3_3">
+        <span>Agora, decida os níveis</span>
+        <div class="caixaniveis">
+            <div class="niveis">
+                <div>Nível 1</div>
+                <input type="text" placeholder="   Título do nível">
+                <input type="text" placeholder="   % de acerto mínima">
+                <input type="text" placeholder="   URL da imagem do nível">
+                <input type="text" placeholder="   Descrição do nível">
+            </div>
+        </div>
+        <div class="caixaniveis">
+            <div class="niveis">
+                <div>Nível 2</div>
+                <input type="text" placeholder="   Título do nível">
+                <input type="text" placeholder="   % de acerto mínima">
+                <input type="text" placeholder="   URL da imagem do nível">
+                <input type="text" placeholder="   Descrição do nível">
+            </div>
+        </div>
+        <div class="caixaniveis">
+            <div class="niveis">
+                <div>Nível 3</div>
+                <input type="text" placeholder="   Título do nível">
+                <input type="text" placeholder="   % de acerto mínima">
+                <input type="text" placeholder="   URL da imagem do nível">
+                <input type="text" placeholder="   Descrição do nível">
+            </div>
+        </div>
+      <div onclick="sucessocriacao()"><button>Finalizar Quizz</button></div>
+      </div>`
+}
+
+function sucessocriacao() {
+  limpatela ();
 }
 
 function exibirquizz(){
