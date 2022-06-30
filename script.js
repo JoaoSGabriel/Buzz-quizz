@@ -1,6 +1,7 @@
 
 let tela = document.querySelector("body");
 let quizzaleatorio;
+let quizzSelecionado;
 todosquizzes ();
 
 function limpatela() {
@@ -8,8 +9,8 @@ function limpatela() {
 }
 
 function todosquizzes () {
-  const promisse = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes");
-  promisse.then(selecionaquizz);
+  const promise = axios.get("https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes");
+  promise.then(selecionaquizz);
 }
 
 function selecionaquizz(resposta) {
@@ -30,12 +31,14 @@ function geradortela1_1 () {
   
   for (i = 0; i < 6; i++) {
     let n = parseInt(Math.random()* quizzaleatorio.length);
-    let cadaquizz = document.querySelector(".quizzes")
-    cadaquizz.innerHTML += 
-      `<div class="quizz" onclick="exibirquizz()">
+    let quizzes = document.querySelector(".quizzes")
+    quizzes.innerHTML += 
+      `<div class="quizz" onclick="gerarQuizz(${quizzaleatorio[n].id})">
           <img src="${quizzaleatorio[n].image}"/>
           <div>${quizzaleatorio[n].title}</div>
       </div>`
+
+      
   }
 }
 
@@ -68,8 +71,8 @@ function geradortela1_2 () {
 
   for (i = 0; i < 6; i++) {
     let n = parseInt(Math.random()* quizzaleatorio.length);
-    let cadaquizz = document.querySelector(".quizzes")
-    cadaquizz.innerHTML += 
+    let quizzes = document.querySelector(".quizzes")
+    quizzes.innerHTML += 
       `<div class="quizz" onclick="exibirquizz()">
           <img src="${quizzaleatorio[n].image}"/>
           <div>${quizzaleatorio[n].title}</div>
@@ -91,35 +94,51 @@ function criarquizz() {
   </div>`
 }
 
-function exibirquizz(){
+function gerarQuizz(idQuizz){
+  const promise = axios.get(`https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes/${idQuizz}`)
+  promise.then(exibirQuizz)
+}
+
+function exibirQuizz(resposta){
+  let quizz = resposta.data;
   limpatela();
-  tela.innerHTML += `<div class="titulo-quizz">
-  <img src="https://5287aa00874a313e299d-1850966fc307ff23e1e789aeafd2476b.ssl.cf5.rackcdn.com/PostImagem/42240/foto-branca-download-wallpapers-e-onde-usar_o1fcm9aiph1mte1km1f11cs53mng.png">
-  <h2>Esse é o título do quizz</h2>
-</div>
-<div class="perguntas">
-  <div class="pergunta">
-      <div class="titulo">
-          <h3>Pergunte aqui</h3>
-      </div>
-      <div class="alternativas">
-          <div class="alternativa">
-              <img src="https://pbs.twimg.com/profile_images/997263527080443904/ucgZYSqz_400x400.jpg">
-              <strong>Resposta</strong>
-          </div>
-          <div class="alternativa">
-              <img src="https://pbs.twimg.com/profile_images/997263527080443904/ucgZYSqz_400x400.jpg">
-              <strong>Resposta</strong>
-          </div>
-          <div class="alternativa">
-              <img src="https://pbs.twimg.com/profile_images/997263527080443904/ucgZYSqz_400x400.jpg">
-              <strong>Resposta</strong>
-          </div>
-          <div class="alternativa">
-              <img src="https://pbs.twimg.com/profile_images/997263527080443904/ucgZYSqz_400x400.jpg">
-              <strong>Resposta</strong>
-          </div>
-      </div>
+  tela.innerHTML += `
+  <div class="titulo-quizz">
+    <img src=${quizz.image}>
+    <h2>${quizz.title}</h2>
   </div>
-</div>`
+  <div class="perguntas">
+  </div>`
+  gerarPerguntas(quizz.questions);
+}
+
+let alternativas = '';
+
+function gerarPerguntas(perguntas){
+  perguntas.sort(() => Math.random() - 0.5);
+  let questoes = tela.querySelector('.perguntas');
+  for (let i = 0; i < perguntas.length; i++){
+    gerarRespostas(perguntas[i].answers);
+    questoes.innerHTML += `
+      <div class="pergunta">
+        <div class="titulo">
+            <h3>${perguntas[i].title}</h3>
+        </div>
+        <div class="alternativas">
+          ${alternativas}
+        </div>
+      </div>`
+      alternativas = '';
+  }
+}
+
+function gerarRespostas(respostas){
+  respostas.sort(() => Math.random() - 0.5);
+  for(let i = 0; i < respostas.length; i++){
+    alternativas +=`
+    <div class="alternativa">
+      <img src=${respostas[i].image}>
+      <strong>${respostas[i].text}</strong>
+    </div>`
+  }
 }
