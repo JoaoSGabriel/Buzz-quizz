@@ -4,7 +4,7 @@ let quizzaleatorio;
 let quizzSelecionado;
 let nperguntas;
 let nniveis;
-todosquizzes ();
+todosQuizzes();
 let quizzcriado = [{
 	id: 1,
 	title: '',
@@ -13,26 +13,26 @@ let quizzcriado = [{
 	levels: []
 	}]
 
-function limpatela() {
+function limpaTela() {
     tela.innerHTML = `<div class="topo">BuzzQuizz</div>`
 }
 
-function todosquizzes () {
+function todosQuizzes () {
   const promise = axios.get("https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes");
-  promise.then(selecionaquizz);
+  promise.then(selecionaQuizz);
 }
 
-function selecionaquizz(resposta) {
+function selecionaQuizz(resposta) {
   quizzaleatorio = resposta.data;
-  if (localStorage.length == 0){
-    geradortela1_1 ();
+  if (localStorage.length === 0){
+    geradorTela1_1 ();
   } else {
-  geradortela1_2 ();
+  geradorTela1_2 ();
   }
 }
 
-function geradortela1_1 () {
-  limpatela();
+function geradorTela1_1 () {
+  limpaTela();
   tela.innerHTML += `
   <div class="semquizz">
       <div>Você não criou nenhum<br>quizz ainda :(</div>
@@ -44,7 +44,7 @@ function geradortela1_1 () {
   
   for (i = 0; i < 6; i++) {
     let n = parseInt(Math.random()* quizzaleatorio.length);
-    let quizzes = document.querySelector(".quizzes")
+    let quizzes = document.querySelector(".quizzes");
     quizzes.innerHTML += 
       `<div class="quizz" onclick="gerarQuizz(${quizzaleatorio[n].id})">
           <img src="${quizzaleatorio[n].image}"/>
@@ -55,8 +55,8 @@ function geradortela1_1 () {
   }
 }
 
-function geradortela1_2 () {
-  limpatela();
+function geradorTela1_2 () {
+  limpaTela();
   //let userquizz = localstorage.getItem("quizz");
   //let quizzproprio = JSON.parse(userquizz);
   tela.innerHTML += `
@@ -94,8 +94,8 @@ function geradortela1_2 () {
       </div>`
   }
 }
-function criarquizz() {
-  limpatela();
+function criarQuizz() {
+  limpaTela();
   tela.innerHTML += `
   <div class="tela3">
     <div>Comece pelo começo</div>
@@ -114,7 +114,7 @@ function gerarQuizz(idQuizz){
   promise.then(exibirQuizz)
 }
 
-function criarperguntas() {
+function criarPerguntas() {
   quizzcriado =  [{
     id: 1,
     title: `${document.querySelector(".title").value}`,
@@ -125,7 +125,7 @@ function criarperguntas() {
   nperguntas = document.querySelector(".Npergunta").value;
   nniveis = document.querySelector(".Nnivel").value
   nperguntas = Number(nperguntas);
-  limpatela();
+  limpaTela();
   tela.innerHTML += `
     <div class="tela3_2">
         <span>Crie suas perguntas</span>
@@ -166,9 +166,13 @@ function criarperguntas() {
   tela1.innerHTML += `<div onclick="escolhernivel()"><button>Prosseguir pra criar perguntas</button></div>`
 }
 
-function escolhernivel() {
+function criaPerguntas () {
+  let perguntascriadas;
+}
+
+function escolherNivel() {
   nniveis = Number(nniveis);
-  limpatela();
+  limpaTela();
 
   tela.innerHTML += `
       <div class="tela3_3">
@@ -191,8 +195,9 @@ function escolhernivel() {
   }
   tela1.innerHTML += `<div onclick="sucessocriacao()"><button>Finalizar Quizz</button></div>`;
 }
-function sucessocriacao() {
-  limpatela ();
+
+function sucessoCriacao() {
+  limpaTela ();
   tela.innerHTML += `
   <div class="tela3_4">
         <span>Seu quizz está pronto!</span>
@@ -209,7 +214,7 @@ function sucessocriacao() {
 
 function exibirQuizz(resposta){
   let quizz = resposta.data;
-  limpatela();
+  limpaTela();
   tela.innerHTML += `
   <div class="titulo-quizz">
     <img src=${quizz.image}>
