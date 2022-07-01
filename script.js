@@ -20,7 +20,7 @@ function todosQuizzes () {
 function selecionaQuizz(resposta) {
   quizzAleatorio = resposta.data;
   if (localStorage.length == 0){
-    geradortela1_1 ();
+    geradorTela1_1 ();
   } else {
   geradorTela1_2 ();
   }
