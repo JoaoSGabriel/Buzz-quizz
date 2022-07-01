@@ -5,13 +5,8 @@ let quizzSelecionado;
 let nperguntas;
 let nniveis;
 todosQuizzes();
-let quizzcriado = [{
-	id: 1,
-	title: '',
-	image: '',
-	questions: [],
-	levels: []
-	}]
+let quizzcriado = [{}];
+let perguntascriadas = [{}];
 
 function limpaTela() {
     tela.innerHTML = `<div class="topo">BuzzQuizz</div>`
@@ -36,7 +31,7 @@ function geradorTela1_1 () {
   tela.innerHTML += `
   <div class="semquizz">
       <div>Você não criou nenhum<br>quizz ainda :(</div>
-      <div onclick="criarquizz()"><button>Criar Quizz</button></div>
+      <div onclick="criarQuizz()"><button>Criar Quizz</button></div>
   </div>
   <div class="quizzes">
     <p>Todos os Quizzes</p>
@@ -105,7 +100,7 @@ function criarQuizz() {
       <input class="Npergunta" type="text" placeholder="     Quantidade de perguntas do quizz">
       <input class="Nnivel" type="text" placeholder="     Quantidade de níveis do quizz">
     </div>
-  <div onclick="criarperguntas()"><button>Prosseguir pra criar perguntas</button></div>
+  <div onclick="criarPerguntas()"><button>Prosseguir pra criar perguntas</button></div>
   </div>`
 }
 
@@ -163,11 +158,40 @@ function criarPerguntas() {
             </div>
         </div>`
   }
-  tela1.innerHTML += `<div onclick="escolhernivel()"><button>Prosseguir pra criar perguntas</button></div>`
+  tela1.innerHTML += `<div onclick="escolherNivel()"><button>Prosseguir pra criar perguntas</button></div>`
 }
 
 function criaPerguntas () {
-  let perguntascriadas;
+
+  for(let y = 0; y < nperguntas; y++) {
+    perguntascriadas = {
+      title: "",
+      color: "",
+      answers: [
+        {
+          text: "",
+          image: "",
+          isCorrectAnswer: true
+        },
+        {
+          text: "",
+          image: "",
+          isCorrectAnswer: false
+        },
+        {
+          text: "",
+          image: "",
+          isCorrectAnswer: false
+        },
+        {
+          text: "",
+          image: "",
+          isCorrectAnswer: false
+        }
+      ]
+    }
+    quizzcriado.questions.push(perguntascriadas)
+  }
 }
 
 function escolherNivel() {
@@ -193,7 +217,7 @@ function escolherNivel() {
             </div>
         </div>`
   }
-  tela1.innerHTML += `<div onclick="sucessocriacao()"><button>Finalizar Quizz</button></div>`;
+  tela1.innerHTML += `<div onclick="sucessoCriacao()"><button>Finalizar Quizz</button></div>`;
 }
 
 function sucessoCriacao() {
