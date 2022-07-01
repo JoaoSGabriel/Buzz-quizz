@@ -2,7 +2,16 @@
 let tela = document.querySelector("body");
 let quizzaleatorio;
 let quizzSelecionado;
+let nperguntas;
+let nniveis;
 todosquizzes ();
+let quizzcriado = [{
+	id: 1,
+	title: '',
+	image: '',
+	questions: [],
+	levels: []
+	}]
 
 function limpatela() {
     tela.innerHTML = `<div class="topo">BuzzQuizz</div>`
@@ -106,131 +115,82 @@ function gerarQuizz(idQuizz){
 }
 
 function criarperguntas() {
+  quizzcriado =  [{
+    id: 1,
+    title: `${document.querySelector(".title").value}`,
+    image: `${document.querySelector(".image").value}`,
+    questions: [],
+    levels: []
+    }];
+  nperguntas = document.querySelector(".Npergunta").value;
+  nniveis = document.querySelector(".Nnivel").value
+  nperguntas = Number(nperguntas);
   limpatela();
   tela.innerHTML += `
-  <div class="tela3_2">
+    <div class="tela3_2">
         <span>Crie suas perguntas</span>
-        <div class="caixadepergunta">
-            <div class="perguntanumero">
-                <p>Pergunta 1</p>
-                <input type="text" placeholder="   Texto da pergunta">
-                <input type="text" placeholder="   Cor de fundo da pergunta">
-            </div>
-            <div class="caixarespcerta">
-                <p>Resposta correta</p>
-                <input type="text" placeholder="   Resposta Correta">
-                <input type="text" placeholder="   URL da imagem">
-            </div>
-            <div class="caixaresperrada">
-                <p>Respostas incorretas</p>
-                <div>
-                    <input type="text" placeholder="   Resposta incorreta 1">
-                    <input type="text" placeholder="   URL da imagem 1">
-                </div>
-                <div>
-                    <input type="text" placeholder="   Resposta incorreta 2">
-                    <input type="text" placeholder="   URL da imagem 2">
-                </div>
-                <div>
-                    <input type="text" placeholder="   Resposta incorreta 3">
-                    <input type="text" placeholder="   URL da imagem 3">
-                </div>
-            </div>
-        </div>
-        <div class="caixadepergunta">
-            <div class="perguntanumero">
-                <p>Pergunta 1</p>
-                <input type="text" placeholder="   Texto da pergunta">
-                <input type="text" placeholder="   Cor de fundo da pergunta">
-            </div>
-            <div class="caixarespcerta">
-                <p>Resposta correta</p>
-                <input type="text" placeholder="   Resposta Correta">
-                <input type="text" placeholder="   URL da imagem">
-            </div>
-            <div class="caixaresperrada">
-                <p>Respostas incorretas</p>
-                <div>
-                    <input type="text" placeholder="   Resposta incorreta 1">
-                    <input type="text" placeholder="   URL da imagem 1">
-                </div>
-                <div>
-                    <input type="text" placeholder="   Resposta incorreta 2">
-                    <input type="text" placeholder="   URL da imagem 2">
-                </div>
-                <div>
-                    <input type="text" placeholder="   Resposta incorreta 3">
-                    <input type="text" placeholder="   URL da imagem 3">
-                </div>
-            </div>
-        </div>
-        <div class="caixadepergunta">
-            <div class="perguntanumero">
-                <p>Pergunta 1</p>
-                <input type="text" placeholder="   Texto da pergunta">
-                <input type="text" placeholder="   Cor de fundo da pergunta">
-            </div>
-            <div class="caixarespcerta">
-                <p>Resposta correta</p>
-                <input type="text" placeholder="   Resposta Correta">
-                <input type="text" placeholder="   URL da imagem">
-            </div>
-            <div class="caixaresperrada">
-                <p>Respostas incorretas</p>
-                <div>
-                    <input type="text" placeholder="   Resposta incorreta 1">
-                    <input type="text" placeholder="   URL da imagem 1">
-                </div>
-                <div>
-                    <input type="text" placeholder="   Resposta incorreta 2">
-                    <input type="text" placeholder="   URL da imagem 2">
-                </div>
-                <div>
-                    <input type="text" placeholder="   Resposta incorreta 3">
-                    <input type="text" placeholder="   URL da imagem 3">
-                </div>
-            </div>
-        </div>
-        <div onclick="escolhernivel()"><button>Prosseguir pra criar perguntas</button></div>
     </div>`
+
+  let tela1 = document.querySelector(".tela3_2");
+
+  for (let i = 1; i < nperguntas + 1; i++) {
+    tela1.innerHTML +=`
+        <div class="caixadepergunta" id="${i}">
+            <div class="perguntanumero">
+                <p>Pergunta ${i}</p>
+                <input type="text" placeholder="   Texto da pergunta">
+                <input type="text" placeholder="   Cor de fundo da pergunta">
+            </div>
+            <div class="caixarespcerta">
+                <p>Resposta correta</p>
+                <input type="text" placeholder="   Resposta Correta">
+                <input type="text" placeholder="   URL da imagem">
+            </div>
+            <div class="caixaresperrada">
+                <p>Respostas incorretas</p>
+                <div>
+                    <input type="text" placeholder="   Resposta incorreta 1">
+                    <input type="text" placeholder="   URL da imagem 1">
+                </div>
+                <div>
+                    <input type="text" placeholder="   Resposta incorreta 2">
+                    <input type="text" placeholder="   URL da imagem 2">
+                </div>
+                <div>
+                    <input type="text" placeholder="   Resposta incorreta 3">
+                    <input type="text" placeholder="   URL da imagem 3">
+                </div>
+            </div>
+        </div>`
+  }
+  tela1.innerHTML += `<div onclick="escolhernivel()"><button>Prosseguir pra criar perguntas</button></div>`
 }
 
 function escolhernivel() {
+  nniveis = Number(nniveis);
   limpatela();
-  tela.innerHTML += `
-  <div class="tela3_3">
-        <span>Agora, decida os níveis</span>
-        <div class="caixaniveis">
-            <div class="niveis">
-                <div>Nível 1</div>
-                <input type="text" placeholder="   Título do nível">
-                <input type="text" placeholder="   % de acerto mínima">
-                <input type="text" placeholder="   URL da imagem do nível">
-                <input type="text" placeholder="   Descrição do nível">
-            </div>
-        </div>
-        <div class="caixaniveis">
-            <div class="niveis">
-                <div>Nível 2</div>
-                <input type="text" placeholder="   Título do nível">
-                <input type="text" placeholder="   % de acerto mínima">
-                <input type="text" placeholder="   URL da imagem do nível">
-                <input type="text" placeholder="   Descrição do nível">
-            </div>
-        </div>
-        <div class="caixaniveis">
-            <div class="niveis">
-                <div>Nível 3</div>
-                <input type="text" placeholder="   Título do nível">
-                <input type="text" placeholder="   % de acerto mínima">
-                <input type="text" placeholder="   URL da imagem do nível">
-                <input type="text" placeholder="   Descrição do nível">
-            </div>
-        </div>
-      <div onclick="sucessocriacao()"><button>Finalizar Quizz</button></div>
-      </div>`
-}
 
+  tela.innerHTML += `
+      <div class="tela3_3">
+        <span>Agora, decida os níveis</span>
+      </div>`;
+  
+  let tela1 = document.querySelector(".tela3_3");
+
+  for (let z = 1; z < (nniveis+1); z++){
+    tela1.innerHTML +=`
+    <div class="caixaniveis" id="${z}">
+            <div class="niveis">
+                <div>Nível ${z}</div>
+                <input type="text" placeholder="   Título do nível">
+                <input type="text" placeholder="   % de acerto mínima">
+                <input type="text" placeholder="   URL da imagem do nível">
+                <input type="text" placeholder="   Descrição do nível">
+            </div>
+        </div>`
+  }
+  tela1.innerHTML += `<div onclick="sucessocriacao()"><button>Finalizar Quizz</button></div>`;
+}
 function sucessocriacao() {
   limpatela ();
   tela.innerHTML += `
