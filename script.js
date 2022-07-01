@@ -5,8 +5,12 @@ let quizzSelecionado;
 let nperguntas;
 let nniveis;
 todosQuizzes();
-let quizzcriado = [{}];
-let perguntascriadas = [{}];
+let quizzcriado = {};
+let perguntascriadas = {};
+let niveiscriados = {};
+let n;
+let quizzes;
+let j;
 
 function limpaTela() {
     tela.innerHTML = `<div class="topo">BuzzQuizz</div>`
@@ -36,12 +40,11 @@ function geradorTela1_1 () {
   <div class="quizzes">
     <p>Todos os Quizzes</p>
   </div>`;
-  
+  quizzes = document.querySelector(".quizzes");
+
   for (i = 0; i < 6; i++) {
-    let n = parseInt(Math.random()* quizzaleatorio.length);
-    let quizzes = document.querySelector(".quizzes");
-    quizzes.innerHTML += 
-      `<div class="quizz" onclick="gerarQuizz(${quizzaleatorio[n].id})">
+    n = parseInt(Math.random()* quizzaleatorio.length);
+    quizzes.innerHTML += `<div class="quizz" onclick="gerarQuizz(${quizzaleatorio[n].id})">
           <img src="${quizzaleatorio[n].image}"/>
           <div>${quizzaleatorio[n].title}</div>
       </div>`
@@ -52,32 +55,33 @@ function geradorTela1_1 () {
 
 function geradorTela1_2 () {
   limpaTela();
-  //let userquizz = localstorage.getItem("quizz");
-  //let quizzproprio = JSON.parse(userquizz);
   tela.innerHTML += `
   <div class="comquizz">
     <div class="navbar">
       <p>Seus Quizzes</p>
-      <div onclick="criarquizz()">
+      <div onclick="criarQuizz()">
         <button><ion-icon name="add-sharp"></ion-icon></button>
       </div>
     </div>
-    <div class="quizz" onclick="exibirQuizz()">
-      <img
-        src="https://thumbs.dreamstime.com/b/fundo-azul-claro-com-brilho-e-c%C3%ADrculos-ilustra%C3%A7%C3%A3o-do-vetor-de-divers%C3%A3o-inverno-para-cartaz-festa-cart%C3%B5es-ano-novo-natal-160774554.jpg"
-      />
-      <div>Pensa num titulo que ta maneiro</div>
-    </div>
-    <div class="quizz" onclick="exibirQuizz()">
-      <img
-        src="https://thumbs.dreamstime.com/b/fundo-azul-claro-com-brilho-e-c%C3%ADrculos-ilustra%C3%A7%C3%A3o-do-vetor-de-divers%C3%A3o-inverno-para-cartaz-festa-cart%C3%B5es-ano-novo-natal-160774554.jpg"
-      />
-      <div>Pensa num titulo que ta maneiro</div>
-    </div>
-  </div>
-  <div class="quizzes">
-    <p>Todos os Quizzes</p>
+    <div class="meuquizz"></div>
   </div>`
+  for (let i = 0; i < localStorage.length; i++) {
+
+  let userquizz = localStorage.getItem(`quizz${i}`);
+  let quizzproprio = JSON.parse(userquizz);
+  
+  let meusquizzes = document.querySelector(".meuquizz");
+  meusquizzes.innerHTML += `
+  <div class="quizz" onclick="gerarQuizz(${quizzproprio.id})">
+    <img src="${quizzproprio.image}"/>
+    <div>${quizzproprio.title}</div>
+  </div>`
+  }
+
+  tela.innerHTML += `
+    <div class="quizzes">
+      <p>Todos os Quizzes</p>
+    </div>`
 
   for (i = 0; i < 6; i++) {
     let n = parseInt(Math.random()* quizzaleatorio.length);
@@ -110,13 +114,13 @@ function gerarQuizz(idQuizz){
 }
 
 function criarPerguntas() {
-  quizzcriado =  [{
+  quizzcriado = {
     id: 1,
     title: `${document.querySelector(".title").value}`,
     image: `${document.querySelector(".image").value}`,
     questions: [],
     levels: []
-    }];
+    };
   nperguntas = document.querySelector(".Npergunta").value;
   nniveis = document.querySelector(".Nnivel").value
   nperguntas = Number(nperguntas);
@@ -130,7 +134,7 @@ function criarPerguntas() {
 
   for (let i = 1; i < nperguntas + 1; i++) {
     tela1.innerHTML +=`
-        <div class="caixadepergunta" id="${i}">
+        <div class="caixadepergunta identify${i}">
             <div class="perguntanumero">
                 <p>Pergunta ${i}</p>
                 <input type="text" placeholder="   Texto da pergunta">
@@ -143,58 +147,58 @@ function criarPerguntas() {
             </div>
             <div class="caixaresperrada">
                 <p>Respostas incorretas</p>
-                <div>
+                <div class="identify1">
                     <input type="text" placeholder="   Resposta incorreta 1">
                     <input type="text" placeholder="   URL da imagem 1">
                 </div>
-                <div>
+                <div class="identify2">
                     <input type="text" placeholder="   Resposta incorreta 2">
                     <input type="text" placeholder="   URL da imagem 2">
                 </div>
-                <div>
+                <div class="identify3">
                     <input type="text" placeholder="   Resposta incorreta 3">
                     <input type="text" placeholder="   URL da imagem 3">
                 </div>
             </div>
         </div>`
   }
-  tela1.innerHTML += `<div onclick="escolherNivel()"><button>Prosseguir pra criar perguntas</button></div>`
+  tela1.innerHTML += `<div onclick="escolherNivel()"><button>Prosseguir pra criar níveis</button></div>`
 }
 
-function criaPerguntas () {
-
-  for(let y = 0; y < nperguntas; y++) {
-    perguntascriadas = {
-      title: "",
-      color: "",
+function salvaPerguntas() {
+  for(let y = 1; y < (nperguntas + 1); y++) {
+      perguntascriadas = {
+      title: `${document.querySelector(`.identify${y} .perguntanumero input:nth-child(2)`).value}`,
+      color: `${document.querySelector(`.identify${y} .perguntanumero input:nth-child(3)`).value}`,
       answers: [
         {
-          text: "",
-          image: "",
+          text: `${document.querySelector(`.identify${y} .caixarespcerta input:nth-child(2)`).value}`,
+          image: `${document.querySelector(`.identify${y} .caixarespcerta input:nth-child(3)`).value}`,
           isCorrectAnswer: true
         },
         {
-          text: "",
-          image: "",
+          text: `${document.querySelector(`.identify${y} .caixaresperrada .identify1 input:nth-child(1)`).value}`,
+          image: `${document.querySelector(`.identify${y} .caixaresperrada .identify1 input:nth-child(2)`).value}`,
           isCorrectAnswer: false
         },
         {
-          text: "",
-          image: "",
+          text: `${document.querySelector(`.identify${y} .caixaresperrada .identify2 input:nth-child(1)`).value}`,
+          image: `${document.querySelector(`.identify${y} .caixaresperrada .identify2 input:nth-child(2)`).value}`,
           isCorrectAnswer: false
         },
         {
-          text: "",
-          image: "",
+          text: `${document.querySelector(`.identify${y} .caixaresperrada .identify3 input:nth-child(1)`).value}`,
+          image: `${document.querySelector(`.identify${y} .caixaresperrada .identify3 input:nth-child(2)`).value}`,
           isCorrectAnswer: false
         }
       ]
     }
-    quizzcriado.questions.push(perguntascriadas)
+    quizzcriado.questions.push(perguntascriadas);
   }
 }
 
 function escolherNivel() {
+  salvaPerguntas();
   nniveis = Number(nniveis);
   limpaTela();
 
@@ -207,7 +211,7 @@ function escolherNivel() {
 
   for (let z = 1; z < (nniveis+1); z++){
     tela1.innerHTML +=`
-    <div class="caixaniveis" id="${z}">
+    <div class="caixaniveis identify${z}">
             <div class="niveis">
                 <div>Nível ${z}</div>
                 <input type="text" placeholder="   Título do nível">
@@ -217,9 +221,35 @@ function escolherNivel() {
             </div>
         </div>`
   }
-  tela1.innerHTML += `<div onclick="sucessoCriacao()"><button>Finalizar Quizz</button></div>`;
+  tela1.innerHTML += `<div onclick="enviaQuizz()"><button>Finalizar Quizz</button></div>`;
 }
 
+function salvaNiveis (){
+  for (let l = 1; l < nniveis + 1; l++) {
+    niveiscriados = {
+      title: `${document.querySelector(`.identify${l} .niveis input:nth-child(2)`).value}`,
+      image: `${document.querySelector(`.identify${l} .niveis input:nth-child(4)`).value}`,
+      text: `${document.querySelector(`.identify${l} .niveis input:nth-child(5)`).value}`,
+      minValue: `${document.querySelector(`.identify${l} .niveis input:nth-child(3)`).value}`
+    }
+    quizzcriado.levels.push(niveiscriados);
+  }
+}
+
+function enviaQuizz() {
+  salvaNiveis();
+  //let promise = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", quizzcriado);
+  //promise.then(sucessoCriacao);
+  //promise.catch(deuRuim)
+  j = localStorage.length;
+  dadosSerializados = JSON.stringify(quizzcriado);
+  localStorage.setItem(`quizz${j}`, dadosSerializados);
+  sucessoCriacao();
+}
+
+function deuRuim () {
+  alert("deu ruim no quizz, reinicia a página");
+}
 function sucessoCriacao() {
   limpaTela ();
   tela.innerHTML += `
@@ -227,12 +257,12 @@ function sucessoCriacao() {
         <span>Seu quizz está pronto!</span>
         <div class="quizz">
             <img
-              src="https://thumbs.dreamstime.com/b/fundo-azul-claro-com-brilho-e-c%C3%ADrculos-ilustra%C3%A7%C3%A3o-do-vetor-de-divers%C3%A3o-inverno-para-cartaz-festa-cart%C3%B5es-ano-novo-natal-160774554.jpg"
+              src="${quizzcriado.image}"
             />
-            <div>Pensa num titulo que ta maneiro</div>
+            <div>${quizzcriado.title}</div>
         </div>
-        <div onclick="exibirQuizz()"><button>Acessar Quizz</button></div>
-        <div class="botaohome" onclick="todosquizzes()"><button>Voltar pra Home</button></div>
+        <div onclick="gerarQuizz"><button>Acessar Quizz</button></div>
+        <div class="botaohome" onclick="todosQuizzes()"><button>Voltar pra Home</button></div>
     </div>`
 }
 
