@@ -296,6 +296,7 @@ input:focus{
     width: 329.91px;
     height: 217px;
     margin-bottom: 18.61px;
+    transition: all 0.3s;
 }
 
 .alternativa img {
@@ -397,6 +398,18 @@ input:focus{
     color: #818181;
     margin: 9px 0 0 0;
     background-color: #FAFAFA;
+}
+
+.nao-selecionada {
+    opacity: 30%;
+}
+
+.texto-verde {
+    color: rgba(0, 156, 34, 1);
+}
+
+.texto-vermelho {
+    color: rgba(255, 11, 11, 1);
 }
 @media (max-width: 1100px) {
 

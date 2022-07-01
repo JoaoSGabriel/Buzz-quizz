@@ -1,6 +1,6 @@
 
 let tela = document.querySelector("body");
-let quizzaleatorio;
+let quizzAleatorio;
 let quizzSelecionado;
 let nperguntas;
 let nniveis;
@@ -23,7 +23,7 @@ function todosquizzes () {
 }
 
 function selecionaquizz(resposta) {
-  quizzaleatorio = resposta.data;
+  quizzAleatorio = resposta.data;
   if (localStorage.length == 0){
     geradortela1_1 ();
   } else {
@@ -43,15 +43,13 @@ function geradortela1_1 () {
   </div>`;
   
   for (i = 0; i < 6; i++) {
-    let n = parseInt(Math.random()* quizzaleatorio.length);
+    let n = parseInt(Math.random()* quizzAleatorio.length);
     let quizzes = document.querySelector(".quizzes")
     quizzes.innerHTML += 
-      `<div class="quizz" onclick="gerarQuizz(${quizzaleatorio[n].id})">
-          <img src="${quizzaleatorio[n].image}"/>
-          <div>${quizzaleatorio[n].title}</div>
-      </div>`
-
-      
+      `<div class="quizz" onclick="gerarQuizz(${quizzAleatorio[n].id})">
+          <img src="${quizzAleatorio[n].image}"/>
+          <div>${quizzAleatorio[n].title}</div>
+      </div>`      
   }
 }
 
@@ -67,13 +65,13 @@ function geradortela1_2 () {
         <button><ion-icon name="add-sharp"></ion-icon></button>
       </div>
     </div>
-    <div class="quizz" onclick="exibirQuizz()">
+    <div class="quizz" onclick="gerarQuizz()">
       <img
         src="https://thumbs.dreamstime.com/b/fundo-azul-claro-com-brilho-e-c%C3%ADrculos-ilustra%C3%A7%C3%A3o-do-vetor-de-divers%C3%A3o-inverno-para-cartaz-festa-cart%C3%B5es-ano-novo-natal-160774554.jpg"
       />
       <div>Pensa num titulo que ta maneiro</div>
     </div>
-    <div class="quizz" onclick="exibirQuizz()">
+    <div class="quizz" onclick="gerarQuizz()">
       <img
         src="https://thumbs.dreamstime.com/b/fundo-azul-claro-com-brilho-e-c%C3%ADrculos-ilustra%C3%A7%C3%A3o-do-vetor-de-divers%C3%A3o-inverno-para-cartaz-festa-cart%C3%B5es-ano-novo-natal-160774554.jpg"
       />
@@ -85,12 +83,12 @@ function geradortela1_2 () {
   </div>`
 
   for (i = 0; i < 6; i++) {
-    let n = parseInt(Math.random()* quizzaleatorio.length);
+    let n = parseInt(Math.random()* quizzAleatorio.length);
     let quizzes = document.querySelector(".quizzes")
     quizzes.innerHTML += 
-      `<div class="quizz" onclick="exibirQuizz()">
-          <img src="${quizzaleatorio[n].image}"/>
-          <div>${quizzaleatorio[n].title}</div>
+      `<div class="quizz" onclick="gerarQuizz()">
+          <img src="${quizzAleatorio[n].image}"/>
+          <div>${quizzAleatorio[n].title}</div>
       </div>`
   }
 }
@@ -107,11 +105,6 @@ function criarquizz() {
     </div>
   <div onclick="criarperguntas()"><button>Prosseguir pra criar perguntas</button></div>
   </div>`
-}
-
-function gerarQuizz(idQuizz){
-  const promise = axios.get(`https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes/${idQuizz}`)
-  promise.then(exibirQuizz)
 }
 
 function criarperguntas() {
@@ -202,9 +195,14 @@ function sucessocriacao() {
             />
             <div>Pensa num titulo que ta maneiro</div>
         </div>
-        <div onclick="exibirQuizz()"><button>Acessar Quizz</button></div>
+        <div onclick="gerarQuizz()"><button>Acessar Quizz</button></div>
         <div class="botaohome" onclick="todosquizzes()"><button>Voltar pra Home</button></div>
     </div>`
+}
+
+function gerarQuizz(idQuizz){
+  const promise = axios.get(`https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes/${idQuizz}`)
+  promise.then(exibirQuizz)
 }
 
 function exibirQuizz(resposta){
@@ -243,10 +241,39 @@ function gerarPerguntas(perguntas){
 function gerarRespostas(respostas){
   respostas.sort(() => Math.random() - 0.5);
   for(let i = 0; i < respostas.length; i++){
-    alternativas +=`
-    <div class="alternativa">
+    if(respostas[i].isCorrectAnswer){
+      alternativas +=`
+      <div class="alternativa correta" onclick="selecionarAlternativa(this)">
       <img src=${respostas[i].image}>
       <strong>${respostas[i].text}</strong>
-    </div>`
+      </div>`
+    } else {
+      alternativas +=`
+      <div class="alternativa errada" onclick="selecionarAlternativa(this)">
+      <img src=${respostas[i].image}>
+      <strong>${respostas[i].text}</strong>
+      </div>`
+    }
+  }
+}
+
+function selecionarAlternativa(alternativa){
+  let alternativasDessaPergunta = alternativa.parentNode.querySelectorAll('.alternativa');
+  for(let i = 0; i < alternativasDessaPergunta.length; i++){
+    if(alternativasDessaPergunta[i].classList.contains('selecionada')){
+      return
+    }
+  }
+  alternativa.classList.add('selecionada');
+  for(let i = 0; i < alternativasDessaPergunta.length; i++){
+    let textoDaAlternativa = alternativasDessaPergunta[i].querySelector('strong')
+    if(!alternativasDessaPergunta[i].classList.contains('selecionada')){
+      alternativasDessaPergunta[i].classList.add('nao-selecionada');
+    }
+    if(alternativasDessaPergunta[i].classList.contains('correta')){
+      textoDaAlternativa.classList.add('texto-verde');
+    } else {
+      textoDaAlternativa.classList.add('texto-vermelho');
+    }
   }
 }
