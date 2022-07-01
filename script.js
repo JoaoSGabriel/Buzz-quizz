@@ -1,6 +1,6 @@
 
 let tela = document.querySelector("body");
-let quizzaleatorio;
+let quizzAleatorio;
 let quizzSelecionado;
 let nperguntas;
 let nniveis;
@@ -22,8 +22,8 @@ function todosQuizzes () {
 }
 
 function selecionaQuizz(resposta) {
-  quizzaleatorio = resposta.data;
-  if (localStorage.length === 0){
+  quizzAleatorio = resposta.data;
+  if (localStorage.length == 0){
     geradorTela1_1 ();
   } else {
   geradorTela1_2 ();
@@ -43,10 +43,10 @@ function geradorTela1_1 () {
   quizzes = document.querySelector(".quizzes");
 
   for (i = 0; i < 6; i++) {
-    n = parseInt(Math.random()* quizzaleatorio.length);
-    quizzes.innerHTML += `<div class="quizz" onclick="gerarQuizz(${quizzaleatorio[n].id})">
-          <img src="${quizzaleatorio[n].image}"/>
-          <div>${quizzaleatorio[n].title}</div>
+    n = parseInt(Math.random()* quizzAleatorio.length);
+    quizzes.innerHTML += `<div class="quizz" onclick="gerarQuizz(${quizzAleatorio[n].id})">
+          <img src="${quizzAleatorio[n].image}"/>
+          <div>${quizzAleatorio[n].title}</div>
       </div>`
 
       
@@ -84,12 +84,12 @@ function geradorTela1_2 () {
     </div>`
 
   for (i = 0; i < 6; i++) {
-    let n = parseInt(Math.random()* quizzaleatorio.length);
+    let n = parseInt(Math.random()* quizzAleatorio.length);
     let quizzes = document.querySelector(".quizzes")
     quizzes.innerHTML += 
-      `<div class="quizz" onclick="exibirQuizz()">
-          <img src="${quizzaleatorio[n].image}"/>
-          <div>${quizzaleatorio[n].title}</div>
+      `<div class="quizz" onclick="gerarQuizz()">
+          <img src="${quizzAleatorio[n].image}"/>
+          <div>${quizzAleatorio[n].title}</div>
       </div>`
   }
 }
@@ -108,12 +108,7 @@ function criarQuizz() {
   </div>`
 }
 
-function gerarQuizz(idQuizz){
-  const promise = axios.get(`https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes/${idQuizz}`)
-  promise.then(exibirQuizz)
-}
-
-function criarPerguntas() {
+function criarperguntas() {
   quizzcriado = {
     id: 1,
     title: `${document.querySelector(".title").value}`,
@@ -261,9 +256,14 @@ function sucessoCriacao() {
             />
             <div>${quizzcriado.title}</div>
         </div>
-        <div onclick="gerarQuizz"><button>Acessar Quizz</button></div>
-        <div class="botaohome" onclick="todosQuizzes()"><button>Voltar pra Home</button></div>
+        <div onclick="gerarQuizz()"><button>Acessar Quizz</button></div>
+        <div class="botaohome" onclick="todosquizzes()"><button>Voltar pra Home</button></div>
     </div>`
+}
+
+function gerarQuizz(idQuizz){
+  const promise = axios.get(`https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes/${idQuizz}`)
+  promise.then(exibirQuizz)
 }
 
 function exibirQuizz(resposta){
@@ -302,10 +302,39 @@ function gerarPerguntas(perguntas){
 function gerarRespostas(respostas){
   respostas.sort(() => Math.random() - 0.5);
   for(let i = 0; i < respostas.length; i++){
-    alternativas +=`
-    <div class="alternativa">
+    if(respostas[i].isCorrectAnswer){
+      alternativas +=`
+      <div class="alternativa correta" onclick="selecionarAlternativa(this)">
       <img src=${respostas[i].image}>
       <strong>${respostas[i].text}</strong>
-    </div>`
+      </div>`
+    } else {
+      alternativas +=`
+      <div class="alternativa errada" onclick="selecionarAlternativa(this)">
+      <img src=${respostas[i].image}>
+      <strong>${respostas[i].text}</strong>
+      </div>`
+    }
+  }
+}
+
+function selecionarAlternativa(alternativa){
+  let alternativasDessaPergunta = alternativa.parentNode.querySelectorAll('.alternativa');
+  for(let i = 0; i < alternativasDessaPergunta.length; i++){
+    if(alternativasDessaPergunta[i].classList.contains('selecionada')){
+      return
+    }
+  }
+  alternativa.classList.add('selecionada');
+  for(let i = 0; i < alternativasDessaPergunta.length; i++){
+    let textoDaAlternativa = alternativasDessaPergunta[i].querySelector('strong')
+    if(!alternativasDessaPergunta[i].classList.contains('selecionada')){
+      alternativasDessaPergunta[i].classList.add('nao-selecionada');
+    }
+    if(alternativasDessaPergunta[i].classList.contains('correta')){
+      textoDaAlternativa.classList.add('texto-verde');
+    } else {
+      textoDaAlternativa.classList.add('texto-vermelho');
+    }
   }
 }
