@@ -310,6 +310,7 @@ function gerarQuizz(idQuizz){
   promise.then(exibirQuizz)
 }
 
+let niveisDoQuizz;
 function exibirQuizz(resposta){
   let quizz = resposta.data;
   limpaTela();
@@ -321,11 +322,14 @@ function exibirQuizz(resposta){
   <div class="perguntas">
   </div>`
   gerarPerguntas(quizz.questions);
+  niveisDoQuizz = quizz.levels
 }
 
 let alternativas = '';
+let perguntasDoQuizz;
 
 function gerarPerguntas(perguntas){
+  perguntasDoQuizz = perguntas.length;
   perguntas.sort(() => Math.random() - 0.5);
   let questoes = tela.querySelector('.perguntas');
   for (let i = 0; i < perguntas.length; i++){
@@ -362,6 +366,8 @@ function gerarRespostas(respostas){
   }
 }
 
+let contadorRespostasCorretas = 0
+
 function selecionarAlternativa(alternativa){
   let alternativasDessaPergunta = alternativa.parentNode.querySelectorAll('.alternativa');
   for(let i = 0; i < alternativasDessaPergunta.length; i++){
@@ -381,6 +387,9 @@ function selecionarAlternativa(alternativa){
       textoDaAlternativa.classList.add('texto-vermelho');
     }
   }
+  if(alternativa.classList.contains('correta')){
+    contadorRespostasCorretas += 1;
+  }
   alternativa.parentNode.parentNode.classList.add('respondida');
   setTimeout(rolarParaProximaPergunta, 2000)
 }
@@ -393,4 +402,30 @@ function rolarParaProximaPergunta(){
         return
       }
     }
+    gerarNivel(niveisDoQuizz);
+}
+
+function gerarNivel(niveis){
+  let acertividade = (contadorRespostasCorretas/perguntasDoQuizz)*100;
+  console.log('contador:', contadorRespostasCorretas);
+  console.log('perguntas:', perguntasDoQuizz);
+  let pontuacao = 0;
+  let nivel = {
+    titulo: '',
+    img: '',
+    descricao: '',
+    minValue: 0
+  };
+  for(let i = 0; i < niveis.length; i++){
+    if(acertividade >= niveis[i].minValue && niveis[i].minValue >= pontuacao){
+      nivel = {
+        titulo: niveis[i].title,
+        img: niveis[i].image,
+        descricao: niveis[i].text,
+        minValue: niveis[i].minValue
+      }
+      pontuacao = niveis[i].minValue;
+    }
+  }
+  contadorRespostasCorretas = 0;
 }
