@@ -311,8 +311,10 @@ function gerarQuizz(idQuizz){
 }
 
 let niveisDoQuizz;
+let idDoQuizz;
 function exibirQuizz(resposta){
   let quizz = resposta.data;
+  idDoQuizz = quizz.id;
   limpaTela();
   tela.innerHTML += `
   <div class="titulo-quizz">
@@ -406,26 +408,47 @@ function rolarParaProximaPergunta(){
 }
 
 function gerarNivel(niveis){
-  let acertividade = (contadorRespostasCorretas/perguntasDoQuizz)*100;
+  let acertividade = ((contadorRespostasCorretas/perguntasDoQuizz)*100).toFixed(0);
+  console.log(acertividade);
   console.log('contador:', contadorRespostasCorretas);
   console.log('perguntas:', perguntasDoQuizz);
   let pontuacao = 0;
   let nivel = {
     titulo: '',
     img: '',
-    descricao: '',
-    minValue: 0
+    descricao: ''
   };
   for(let i = 0; i < niveis.length; i++){
     if(acertividade >= niveis[i].minValue && niveis[i].minValue >= pontuacao){
       nivel = {
         titulo: niveis[i].title,
         img: niveis[i].image,
-        descricao: niveis[i].text,
-        minValue: niveis[i].minValue
+        descricao: niveis[i].text
       }
       pontuacao = niveis[i].minValue;
     }
   }
   contadorRespostasCorretas = 0;
+  finalizarQuizz(nivel)
+}
+
+function finalizarQuizz(nivel){
+  tela.innerHTML += `
+  <div class="quizz-finalizado">
+      <div class="nivel-quizz">
+          <div class="titulo-nivel">
+              <h2>${nivel.titulo}</h2>
+          </div>
+          <div class="img-e-descricao">
+              <img src="${nivel.img}">
+              <div class="descricao-nivel">
+                  <p>${nivel.descricao}</p>
+              </div>
+          </div>
+      </div>
+      <button class="reiniciar-quizz" onclick="gerarQuizz(${idDoQuizz})">Reiniciar Quizz</button>
+      <button class="voltar-para-home" onclick="todosQuizzes()">Voltar para home</button>
+  </div>`;
+  const final = document.querySelector('.quizz-finalizado');
+  final.scrollIntoView();
 }
