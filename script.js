@@ -228,7 +228,12 @@ function escolherNivel() {
 
   for (let z = 1; z < (nniveis+1); z++){
     tela1.innerHTML +=`
-    <div class="caixaniveis identify${z}">
+    <div class="id${z}" onclick="nivelDropdown(this)">
+        <div class="caixapergunta">
+          <p>Nível ${z}</p>
+          <p><ion-icon name="pencil-outline"></ion-icon></p>
+        </div>
+      <div class="caixaniveis encolhida identify${z}">
             <div class="niveis">
                 <div>Nível ${z}</div>
                 <input type="text" placeholder="   Título do nível">
@@ -236,9 +241,26 @@ function escolherNivel() {
                 <input type="text" placeholder="   URL da imagem do nível">
                 <input type="text" placeholder="   Descrição do nível">
             </div>
-        </div>`
+      </div>
+    </div>`
   }
   tela1.innerHTML += `<div onclick="enviaQuizz()"><button>Finalizar Quizz</button></div>`;
+
+  document.querySelector(".caixapergunta").classList.add('encolhida');
+  document.querySelector(".caixaniveis").classList.remove('encolhida');
+}
+
+function nivelDropdown (Element){
+  for (let i = 1; i < nniveis + 1; i++) {
+    if (document.querySelector(`.id${i} .caixapergunta`).classList.contains('encolhida')){
+      document.querySelector(`.id${i} .caixapergunta`).classList.remove('encolhida');
+    }
+    if (document.querySelector(`.id${i} .caixaniveis`).classList.contains('encolhida') == false){
+      document.querySelector(`.id${i} .caixaniveis`).classList.add('encolhida');
+    }
+  }
+  Element.querySelector(".caixapergunta").classList.add('encolhida');
+  Element.querySelector(".caixaniveis").classList.remove('encolhida');
 }
 
 function salvaNiveis (){
@@ -279,7 +301,7 @@ function sucessoCriacao() {
             <div>${quizzcriado.title}</div>
         </div>
         <div onclick="gerarQuizz()"><button>Acessar Quizz</button></div>
-        <div class="botaohome" onclick="todosquizzes()"><button>Voltar pra Home</button></div>
+        <div class="botaohome" onclick="todosQuizzes()"><button>Voltar pra Home</button></div>
     </div>`
 }
 
