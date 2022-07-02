@@ -381,4 +381,16 @@ function selecionarAlternativa(alternativa){
       textoDaAlternativa.classList.add('texto-vermelho');
     }
   }
+  alternativa.parentNode.parentNode.classList.add('respondida');
+  setTimeout(rolarParaProximaPergunta, 2000)
+}
+
+function rolarParaProximaPergunta(){
+  let perguntas = document.querySelectorAll('.pergunta');
+    for(let i = 0; i < perguntas.length; i++){
+      if(!perguntas[i].classList.contains('respondida')){
+        perguntas[i].scrollIntoView();
+        return
+      }
+    }
 }
