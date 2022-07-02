@@ -5,7 +5,7 @@ let quizzSelecionado;
 let nperguntas;
 let nniveis;
 todosQuizzes();
-let quizzcriado = {};
+let quizzCriado = {};
 let perguntascriadas = {};
 let niveiscriados = {};
 let n;
@@ -104,21 +104,39 @@ function criarQuizz() {
       <input class="Npergunta" type="text" placeholder="     Quantidade de perguntas do quizz">
       <input class="Nnivel" type="text" placeholder="     Quantidade de níveis do quizz">
     </div>
-  <div onclick="criarPerguntas()"><button>Prosseguir pra criar perguntas</button></div>
+  <div onclick="verificarInformacoesDoQuizz()"><button>Prosseguir pra criar perguntas</button></div>
   </div>`
 }
 
-function criarPerguntas() {
-  quizzcriado = {
+const ehValidoTituloDoQuizz = titulo => titulo.length > 20 && titulo.length < 65;
+const ehURLValida = img => new RegExp('^(https?:\\/\\/)?((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|((\\d{1,3}\\.){3}\\d{1,3}))(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*(\\?[;&a-z\\d%_.~+=-]*)?(\\#[-a-z\\d_]*)?$','i').test(img);
+const ehValidoNumeroDePerguntas = numeroDePerguntas => numeroDePerguntas >= 3;
+const ehValidoNumeroDeNiveis = numeroDeNiveis => numeroDeNiveis >= 2;
+const ehQuizzValido = (titulo, img, perguntas, niveis) => ehValidoTituloDoQuizz(titulo) && ehURLValida(img) && ehValidoNumeroDePerguntas(perguntas) && ehValidoNumeroDeNiveis(niveis);
+
+function verificarInformacoesDoQuizz(){
+  quizzCriado = {
     id: 1,
-    title: `${document.querySelector(".title").value}`,
-    image: `${document.querySelector(".image").value}`,
+    title: document.querySelector(".title").value,
+    image: document.querySelector(".image").value,
     questions: [],
     levels: []
     };
-  nperguntas = document.querySelector(".Npergunta").value;
-  nniveis = document.querySelector(".Nnivel").value
-  nperguntas = Number(nperguntas);
+  nperguntas = Number(document.querySelector(".Npergunta").value);
+  nniveis = document.querySelector(".Nnivel").value;
+
+  if(ehQuizzValido(quizzCriado.title, quizzCriado.image, nperguntas, nniveis)){
+    criarPerguntas();
+  } else {
+    alert(`informações de Quizz inválidas!
+    Seu quizz precisa ter um título com mais de 20 e menos de 65 caracteres,
+    uma URL de imagem válida,
+    pelo menos 3 perguntas e 2 níveis`)
+    criarQuizz();
+  }
+}
+
+function criarPerguntas() {
   limpaTela();
   tela.innerHTML += `
     <div class="tela3_2">
@@ -210,7 +228,7 @@ function salvaPerguntas() {
         }
       ]
     }
-    quizzcriado.questions.push(perguntascriadas);
+    quizzCriado.questions.push(perguntascriadas);
   }
 }
 
@@ -271,17 +289,17 @@ function salvaNiveis (){
       text: `${document.querySelector(`.identify${l} .niveis input:nth-child(5)`).value}`,
       minValue: `${document.querySelector(`.identify${l} .niveis input:nth-child(3)`).value}`
     }
-    quizzcriado.levels.push(niveiscriados);
+    quizzCriado.levels.push(niveiscriados);
   }
 }
 
 function enviaQuizz() {
   salvaNiveis();
-  //let promise = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", quizzcriado);
+  //let promise = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", quizzCriado);
   //promise.then(sucessoCriacao);
   //promise.catch(deuRuim)
   j = localStorage.length;
-  dadosSerializados = JSON.stringify(quizzcriado);
+  dadosSerializados = JSON.stringify(quizzCriado);
   localStorage.setItem(`quizz${j}`, dadosSerializados);
   sucessoCriacao();
 }
@@ -296,9 +314,9 @@ function sucessoCriacao() {
         <span>Seu quizz está pronto!</span>
         <div class="quizz">
             <img
-              src="${quizzcriado.image}"
+              src="${quizzCriado.image}"
             />
-            <div>${quizzcriado.title}</div>
+            <div>${quizzCriado.title}</div>
         </div>
         <div onclick="gerarQuizz()"><button>Acessar Quizz</button></div>
         <div class="botaohome" onclick="todosQuizzes()"><button>Voltar pra Home</button></div>
