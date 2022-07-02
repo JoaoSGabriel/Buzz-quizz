@@ -108,7 +108,7 @@ function criarQuizz() {
   </div>`
 }
 
-function criarperguntas() {
+function criarPerguntas() {
   quizzcriado = {
     id: 1,
     title: `${document.querySelector(".title").value}`,
@@ -129,7 +129,12 @@ function criarperguntas() {
 
   for (let i = 1; i < nperguntas + 1; i++) {
     tela1.innerHTML +=`
-        <div class="caixadepergunta identify${i}">
+      <div class="id${i}" onclick="perguntaDropdown(this)">
+        <div class="caixapergunta">
+          <p>Pergunta ${i}</p>
+          <p><ion-icon name="pencil-outline"></ion-icon></p>
+        </div>
+        <div class="caixadepergunta encolhida identify${i}">
             <div class="perguntanumero">
                 <p>Pergunta ${i}</p>
                 <input type="text" placeholder="   Texto da pergunta">
@@ -155,9 +160,26 @@ function criarperguntas() {
                     <input type="text" placeholder="   URL da imagem 3">
                 </div>
             </div>
-        </div>`
+        </div>
+      </div>`
   }
   tela1.innerHTML += `<div onclick="escolherNivel()"><button>Prosseguir pra criar níveis</button></div>`
+
+  document.querySelector(".caixapergunta").classList.add('encolhida');
+  document.querySelector(".caixadepergunta").classList.remove('encolhida');
+}
+
+function perguntaDropdown (Element){
+  for (let i = 1; i < nperguntas + 1; i++) {
+    if (document.querySelector(`.id${i} .caixapergunta`).classList.contains('encolhida')){
+      document.querySelector(`.id${i} .caixapergunta`).classList.remove('encolhida');
+    }
+    if (document.querySelector(`.id${i} .caixadepergunta`).classList.contains('encolhida') == false){
+      document.querySelector(`.id${i} .caixadepergunta`).classList.add('encolhida');
+    }
+  }
+  Element.querySelector(".caixapergunta").classList.add('encolhida');
+  Element.querySelector(".caixadepergunta").classList.remove('encolhida');
 }
 
 function salvaPerguntas() {

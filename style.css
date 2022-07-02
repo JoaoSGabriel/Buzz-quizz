@@ -347,11 +347,29 @@ input:focus{
     margin-bottom: 30px;
 }
 
-.caixadepergunta p{
+.caixadepergunta p,
+.caixapergunta p{
     color: #000000;
     font-size: 20px;
     font-weight: 700;
     line-height: 24px;
+}
+
+.caixapergunta {
+    width: 600px;
+    height: 74px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px 0 17px;
+    box-sizing: border-box;
+    background-color:#FFFFFF;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+}
+
+.encolhida {
+    display: none;
 }
 
 .perguntanumero,
