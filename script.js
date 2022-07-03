@@ -76,7 +76,7 @@ function geradorTela1_2 () {
   
   let meusquizzes = document.querySelector(".meuquizz");
   meusquizzes.innerHTML += `
-  <div class="quizz" onclick="gerarQuizz(${quizzproprio.id})">
+  <div class="quizz">
     <img src="${quizzproprio.image}"/>
     <div>${quizzproprio.title}</div>
   </div>`
@@ -91,7 +91,7 @@ function geradorTela1_2 () {
     let n = parseInt(Math.random()* quizzAleatorio.length);
     let quizzes = document.querySelector(".quizzes")
     quizzes.innerHTML += 
-      `<div class="quizz" onclick="gerarQuizz()">
+      `<div class="quizz" onclick="gerarQuizz(${quizzAleatorio[n].id})">
           <img src="${quizzAleatorio[n].image}"/>
           <div>${quizzAleatorio[n].title}</div>
       </div>`
@@ -120,23 +120,22 @@ const ehQuizzValido = (titulo, img, perguntas, niveis) => ehValidoTituloDoQuizz(
 
 function verificarInformacoesDoQuizz(){
   quizzCriado = {
-    id: 1,
     title: document.querySelector(".title").value,
     image: document.querySelector(".image").value,
     questions: [],
     levels: []
     };
   nperguntas = Number(document.querySelector(".Npergunta").value);
-  nniveis = document.querySelector(".Nnivel").value;
+  nniveis = Number(document.querySelector(".Nnivel").value);
 
   if(ehQuizzValido(quizzCriado.title, quizzCriado.image, nperguntas, nniveis)){
     criarPerguntas();
   } else {
-    alert(`informações de Quizz inválidas!
+    alert(`Informações de Quizz inválidas!
     Seu quizz precisa ter um título com mais de 20 e menos de 65 caracteres,
     uma URL de imagem válida,
     pelo menos 3 perguntas e 2 níveis`)
-    criarQuizz();
+    return;
   }
 }
 
@@ -160,7 +159,7 @@ function criarPerguntas() {
             <div class="perguntanumero">
                 <p>Pergunta ${i}</p>
                 <input type="text" placeholder="   Texto da pergunta">
-                <input type="text" placeholder="   Cor de fundo da pergunta">
+                <input type="color" placeholder="  Cor de fundo da pergunta">
             </div>
             <div class="caixarespcerta">
                 <p>Resposta correta</p>
@@ -185,7 +184,7 @@ function criarPerguntas() {
         </div>
       </div>`
   }
-  tela1.innerHTML += `<div onclick="escolherNivel()"><button>Prosseguir pra criar níveis</button></div>`
+  tela1.innerHTML += `<div onclick="verificarInformacoesDaPergunta ()"><button>Prosseguir pra criar níveis</button></div>`
 
   document.querySelector(".caixapergunta").classList.add('encolhida');
   document.querySelector(".caixadepergunta").classList.remove('encolhida');
@@ -202,6 +201,29 @@ function perguntaDropdown (Element){
   }
   Element.querySelector(".caixapergunta").classList.add('encolhida');
   Element.querySelector(".caixadepergunta").classList.remove('encolhida');
+}
+
+function verificarInformacoesDaPergunta () {
+  for(let y = 1; y < (nperguntas + 1); y++) {
+    let perguntaLength = document.querySelector(`.identify${y} .perguntanumero input:nth-child(2)`).value.length;
+    if (perguntaLength < 20) {
+      alert(`Informações de Quizz inválidas! As perguntas do seu quizz precisam ter um texto com mais de 20 caracteres`);
+      return;
+    } else if (document.querySelector(`.identify${y} .caixarespcerta input:nth-child(2)`).value === '' || document.querySelector(`.identify${y} .caixaresperrada .identify1 input:nth-child(1)`).value === '') {
+      alert(`Informações de Quizz inválidas! É necessário que tenha, pelo menos, uma resposta correta e uma incorreta por pergunta`);
+      return;
+    } else if (!ehURLValida(document.querySelector(`.identify${y} .caixarespcerta input:nth-child(3)`).value) || !ehURLValida(document.querySelector(`.identify${y} .caixaresperrada .identify1 input:nth-child(2)`).value)) {
+      alert('Informações de Quizz inválidas! É necessário passar uma URL de imagem válida');
+      return;
+    }
+    if (document.querySelector(`.identify${y} .caixaresperrada .identify2 input:nth-child(1)`).value !== "" && document.querySelector(`.identify${y} .caixaresperrada .identify2 input:nth-child(2)`).value !== "") {
+      !ehURLValida(document.querySelector(`.identify${y} .caixaresperrada .identify2 input:nth-child(2)`));
+    }
+    if (document.querySelector(`.identify${y} .caixaresperrada .identify3 input:nth-child(1)`).value !== "" && document.querySelector(`.identify${y} .caixaresperrada .identify3 input:nth-child(2)`).value !== "") {
+      ehURLValida(document.querySelector(`.identify${y} .caixaresperrada .identify3 input:nth-child(2)`));
+    }
+  }
+  salvaPerguntas();
 }
 
 function salvaPerguntas() {
@@ -240,11 +262,10 @@ function salvaPerguntas() {
     }
     quizzCriado.questions.push(perguntascriadas);
   }
+  escolherNivel()
 }
 
 function escolherNivel() {
-  salvaPerguntas();
-  nniveis = Number(nniveis);
   limpaTela();
 
   tela.innerHTML += `
