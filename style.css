@@ -104,6 +104,7 @@ body {
     justify-content: center;
     align-items: center;
     margin: 0 0 0 17px;
+    cursor: pointer;
 }
 
 .quizzes{
@@ -366,6 +367,7 @@ input:focus{
     background-color:#FFFFFF;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
     margin-bottom: 30px;
+    cursor: pointer;
 }
 
 .perguntanumero,
@@ -515,6 +517,7 @@ input:focus{
     font-size: 21px;
     font-weight: 400;
     margin: 57px 0 16px;
+    cursor: pointer;
 }
 
 .voltar-para-home {
@@ -525,6 +528,7 @@ input:focus{
     font-weight: 400;
     color: rgba(129, 129, 129, 1);
     background-color: #FAFAFA;
+    cursor: pointer;
 }
 
 @media (max-width: 1100px) {
