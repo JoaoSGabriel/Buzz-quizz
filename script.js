@@ -6,7 +6,11 @@ let nperguntas;
 let nniveis;
 todosQuizzes();
 let quizzCriado = {};
-let perguntascriadas = {};
+let perguntascriadas = {
+  title: '',
+  color: '',
+  answers: []
+};
 let niveiscriados = {};
 let n;
 let quizzes;
@@ -215,18 +219,24 @@ function salvaPerguntas() {
           text: `${document.querySelector(`.identify${y} .caixaresperrada .identify1 input:nth-child(1)`).value}`,
           image: `${document.querySelector(`.identify${y} .caixaresperrada .identify1 input:nth-child(2)`).value}`,
           isCorrectAnswer: false
-        },
-        {
-          text: `${document.querySelector(`.identify${y} .caixaresperrada .identify2 input:nth-child(1)`).value}`,
-          image: `${document.querySelector(`.identify${y} .caixaresperrada .identify2 input:nth-child(2)`).value}`,
-          isCorrectAnswer: false
-        },
-        {
-          text: `${document.querySelector(`.identify${y} .caixaresperrada .identify3 input:nth-child(1)`).value}`,
-          image: `${document.querySelector(`.identify${y} .caixaresperrada .identify3 input:nth-child(2)`).value}`,
-          isCorrectAnswer: false
         }
       ]
+    }
+    if (document.querySelector(`.identify${y} .caixaresperrada .identify2 input:nth-child(1)`).value !== "" && document.querySelector(`.identify${y} .caixaresperrada .identify2 input:nth-child(2)`).value !== "") {
+     let resposta3 = {
+        text: `${document.querySelector(`.identify${y} .caixaresperrada .identify2 input:nth-child(1)`).value}`,
+        image: `${document.querySelector(`.identify${y} .caixaresperrada .identify2 input:nth-child(2)`).value}`,
+        isCorrectAnswer: false
+      }
+      perguntascriadas.answers.push(resposta3);
+    }
+    if (document.querySelector(`.identify${y} .caixaresperrada .identify3 input:nth-child(1)`).value !== "" && document.querySelector(`.identify${y} .caixaresperrada .identify3 input:nth-child(2)`).value !== "") {
+      let resposta4 = {
+        text: `${document.querySelector(`.identify${y} .caixaresperrada .identify3 input:nth-child(1)`).value}`,
+        image: `${document.querySelector(`.identify${y} .caixaresperrada .identify3 input:nth-child(2)`).value}`,
+        isCorrectAnswer: false
+      }
+      perguntascriadas.answers.push(resposta4);
     }
     quizzCriado.questions.push(perguntascriadas);
   }
