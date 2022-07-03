@@ -187,7 +187,7 @@ function criarPerguntas() {
   document.querySelector(".caixadepergunta").classList.remove('encolhida');
 }
 
-function perguntaDropdown (Element){
+function perguntaDropdown (element){
   for (let i = 1; i < nperguntas + 1; i++) {
     if (document.querySelector(`.id${i} .caixapergunta`).classList.contains('encolhida')){
       document.querySelector(`.id${i} .caixapergunta`).classList.remove('encolhida');
@@ -196,8 +196,8 @@ function perguntaDropdown (Element){
       document.querySelector(`.id${i} .caixadepergunta`).classList.add('encolhida');
     }
   }
-  Element.querySelector(".caixapergunta").classList.add('encolhida');
-  Element.querySelector(".caixadepergunta").classList.remove('encolhida');
+  element.querySelector(".caixapergunta").classList.add('encolhida');
+  element.querySelector(".caixadepergunta").classList.remove('encolhida');
 }
 
 function salvaPerguntas() {
@@ -418,7 +418,9 @@ function rolarParaProximaPergunta(){
   let perguntas = document.querySelectorAll('.pergunta');
     for(let i = 0; i < perguntas.length; i++){
       if(!perguntas[i].classList.contains('respondida')){
-        perguntas[i].scrollIntoView();
+        perguntas[i].scrollIntoView({
+          behavior : 'smooth' 
+        });
         return
       }
     }
@@ -468,5 +470,7 @@ function finalizarQuizz(nivel){
       <button class="voltar-para-home" onclick="todosQuizzes()">Voltar para home</button>
   </div>`;
   const final = document.querySelector('.quizz-finalizado');
-  final.scrollIntoView();
+  final.scrollIntoView({
+    behavior : 'smooth' 
+  });
 }
