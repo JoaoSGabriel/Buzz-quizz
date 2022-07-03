@@ -293,7 +293,7 @@ function escolherNivel() {
       </div>
     </div>`
   }
-  tela1.innerHTML += `<div onclick="enviaQuizz()"><button>Finalizar Quizz</button></div>`;
+  tela1.innerHTML += `<div onclick="verificarInformacoesDoNivel()"><button>Finalizar Quizz</button></div>`;
 
   document.querySelector(".caixapergunta").classList.add('encolhida');
   document.querySelector(".caixaniveis").classList.remove('encolhida');
@@ -312,6 +312,34 @@ function nivelDropdown (Element){
   Element.querySelector(".caixaniveis").classList.remove('encolhida');
 }
 
+function verificarInformacoesDoNivel (){
+  let contador = 0;
+  for (let l = 1; l < nniveis + 1; l++) {
+    let titleLength = document.querySelector(`.identify${l} .niveis input:nth-child(2)`).value.length;
+    let textlength = document.querySelector(`.identify${l} .niveis input:nth-child(5)`).value.length;
+    if (titleLength < 10) {
+      alert('Informações de Quizz inválidas! Os títulos dos níveis precisam ter um texto com mais de 10 caracteres');
+      return;
+    } else if (textlength < 30) {
+      alert('Informações de Quizz inválidas! A descrição dos seus níveis precisam ter um texto com mais de 30 caracteres');
+      return;
+    } else if (!ehURLValida(document.querySelector(`.identify${l} .niveis input:nth-child(4)`).value)) {
+      alert('Informações de Quizz inválidas! É necessário passar uma URL de imagem válida');
+      return;
+    } else if (document.querySelector(`.identify${l} .niveis input:nth-child(3)`).value < 0 || document.querySelector(`.identify${l} .niveis input:nth-child(3)`).value > 100) {
+      alert('Informações de Quizz inválidas! A % de acerto mínima deve ser um número entre 0 e 100');
+      return;
+    } else if (document.querySelector(`.identify${l} .niveis input:nth-child(3)`).value == 0) {
+      contador++
+    }
+  }
+  if (contador > 0) {
+    salvaNiveis();
+  } else {
+    alert('Informações de Quizz inválidas! É obrigatório existir pelo menos 1 nível cuja % de acerto mínima seja 0%')
+  }
+}
+
 function salvaNiveis (){
   for (let l = 1; l < nniveis + 1; l++) {
     niveiscriados = {
@@ -322,21 +350,21 @@ function salvaNiveis (){
     }
     quizzCriado.levels.push(niveiscriados);
   }
+  enviaQuizz()
 }
 
 function enviaQuizz() {
-  salvaNiveis();
-  //let promise = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", quizzCriado);
-  //promise.then(sucessoCriacao);
-  //promise.catch(deuRuim)
   j = localStorage.length;
   dadosSerializados = JSON.stringify(quizzCriado);
   localStorage.setItem(`quizz${j}`, dadosSerializados);
+  //let promise = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", quizzCriado);
+  //promise.then(sucessoCriacao);
+  //promise.catch(deuRuim)
   sucessoCriacao();
 }
 
 function deuRuim () {
-  alert("deu ruim no quizz, reinicia a página");
+  alert("deu ruim pra salvar a página, reinicia a página");
 }
 function sucessoCriacao() {
   limpaTela ();
