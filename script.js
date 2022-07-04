@@ -442,6 +442,10 @@ function gerarPerguntas(perguntas){
       </div>`
       alternativas = '';
   }
+  let titulos = document.querySelectorAll('.titulo');
+  for(let i = 0; i < titulos.length; i++){
+    titulos[i].style.background = perguntas[i].color;
+  }
 }
 
 function gerarRespostas(respostas){

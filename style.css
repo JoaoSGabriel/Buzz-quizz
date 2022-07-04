@@ -262,6 +262,7 @@ input:focus{
     color: rgba(255, 255, 255, 1);
     position: absolute;
     top: calc(50% - 19.5px);
+    word-break: break-all;
 
 }
 
@@ -273,8 +274,7 @@ input:focus{
 }
 
 .pergunta {
-    width: 100%;
-    max-width: 759px;
+    width: 759px;
     height: 676px;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.05);
     margin-top: 42px;
@@ -286,7 +286,6 @@ input:focus{
 .titulo {
     width: 90%;
     height: 137.99px;
-    background-color: rgba(67, 76, 160, 1);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -297,6 +296,7 @@ input:focus{
     font-size: 23px;
     font-weight: 700;
     color: rgba(255, 255, 255, 1);
+    word-break: break-all;
 }
 
 .alternativas {
@@ -317,12 +317,13 @@ input:focus{
 
 .alternativa img {
     width: 329.91px;
-    height: 175.2px;
+    height: 80.7%;
     margin-bottom: 7.75px;
 }
 
 .alternativa strong {
     font-size: 20px;
+    word-break: break-all;
 }
 
 .tela3_2 span,
@@ -481,6 +482,7 @@ input:focus{
     font-size: 23px;
     font-weight: 700;
     color: rgba(255, 255, 255, 1);
+    word-break: break-all;
 }
 
 .img-e-descricao {
@@ -502,6 +504,7 @@ input:focus{
 .descricao-nivel p {
     font-size: 19px;
     font-weight: 700;
+    word-break: break-all;
 }
 
 .reiniciar-quizz {
@@ -680,8 +683,11 @@ input:focus{
         width: 100%;
         height: fit-content;
     }
+<<<<<<< HEAD
     .encolhida {
         display: none;
     }
+=======
+>>>>>>> c5695fd971029a44e46cb921876f415da3e3bb44
     
 }
