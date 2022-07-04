@@ -20,9 +20,9 @@ body {
     top: 0;
     left: 0;
     z-index: 1;
+    box-sizing: border-box;
 }
 
-/* organização da tela1-1 e tela1-2 */
 .semquizz {
     width: 1051px;
     height: 181px;
@@ -35,6 +35,7 @@ body {
     margin: 77px auto 77px auto;
     border-radius: 5px;
     margin-top: 146px;
+    box-sizing: border-box;
 }
 
 .semquizz div{
@@ -62,6 +63,7 @@ body {
     margin: 138px auto 48px auto;
     display: flex;
     flex-wrap: wrap;
+    box-sizing: border-box;
 }
 
 .navbar {
@@ -83,6 +85,7 @@ body {
 
 .meuquizz .quizz{
     margin: 0 15px 0 0;
+    box-sizing: border-box;
 }
 
 .navbar p{
@@ -114,6 +117,7 @@ body {
     justify-content: space-between;
     flex-wrap: wrap;
     position: relative;
+    box-sizing: border-box;
 }
 
 .quizzes p{
@@ -158,7 +162,6 @@ body {
     z-index: -1;
 }
 
-/* organização da tela3 */
 .tela3,
 .tela3_2,
 .tela3_3,
@@ -328,7 +331,6 @@ input:focus{
     word-break: break-all;
 }
 
-/* criação do quizz*/
 .tela3_2 span,
 .tela3_3 span,
 .tela3_4 span{
@@ -535,24 +537,55 @@ input:focus{
 }
 
 @media (max-width: 1100px) {
+    .tela3 button,
+    .tela3_2 button,
+    .tela3_3 button,
+    .tela3_4 button {
+        width: 80%;
+    }
+    .semquizz {
+        width: 90%;
+    }
     .comquizz {
-        width: 340px;
+        width: 100%;
+        flex-wrap: unset;
+        flex-direction: column;
+        align-items: center;
     }
     .navbar {
         justify-content: space-between;
         padding: 0 0 0 0;
+        width: 90%;
     }
     .meuquizz {
-        width: 340px;
-        flex-wrap: wrap;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
     .meuquizz .quizz {
-        margin: 0 0 12px 0;
+        margin: 0;
     }
     .quizzes {
-        width: 340px;
+        width: 100%;
+        flex-wrap: unset;
+        flex-direction: column;
+        align-items: center;
+        height: auto;
     }
-    .tela3 {
+    .quizzes p{
+        width: 90%;
+    }
+    .quizz {
+        width: 90%;
+        box-sizing: border-box;
+    }
+    .quizz img {
+        width: 100%;
+    }
+    .tela3,
+    .tela3_2,
+    .tela3_3 {
         text-align: center;
     }
     input {
@@ -564,8 +597,9 @@ input:focus{
     .tela3 div,
     .tela3_2 div,
     .tela3_3 div {
-        width: 100vw;
+        width: 100%;
     }
+    
     .caixadepergunta,
     .caixapergunta {
         width: 100%;
@@ -578,9 +612,11 @@ input:focus{
     .perguntanumero p,
     .caixarespcerta p{
         width: 90%;
+        text-align: start;
     }
     .caixaresperrada p{
         width: 90%;
+        text-align: start;
     }
     .caixaresperrada {
         display: flex;
@@ -598,6 +634,7 @@ input:focus{
     }
     .niveis div {
         width: 90%;
+        text-align: start;
     }
     .niveis input:nth-child(5) {
         height: 144px;
@@ -655,5 +692,4 @@ input:focus{
         width: 100%;
         height: fit-content;
     }
-    
 }

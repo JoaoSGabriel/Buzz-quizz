@@ -28,7 +28,6 @@ function todosQuizzes () {
 
 function selecionaQuizz(resposta) {
   quizzAleatorio = resposta.data;
-  console.log(quizzAleatorio)
   if (localStorage.length == 0){
     geradorTela1_1 ();
   } else {
@@ -394,8 +393,6 @@ function sucessoCriacao() {
         <div onclick="gerarQuizzDoUsuario(${quizzCriado.id})"><button>Acessar Quizz</button></div>
         <div class="botaohome" onclick="todosQuizzes()"><button>Voltar pra Home</button></div>
     </div>`
-    console.log(quizzCriado);
-    console.log(quizzParaAPI);
 }
 
 function gerarQuizzDoUsuario(i){
