@@ -6,6 +6,7 @@ let nperguntas;
 let nniveis;
 todosQuizzes();
 let quizzCriado = {};
+let quizzParaAPI = {};
 let perguntascriadas = {
   title: '',
   color: '',
@@ -72,11 +73,12 @@ function geradorTela1_2 () {
   for (let i = 0; i < localStorage.length; i++) {
 
   let userquizz = localStorage.getItem(`quizz${i}`);
+  let quizz = `quizz${i}`
   let quizzproprio = JSON.parse(userquizz);
   
   let meusquizzes = document.querySelector(".meuquizz");
   meusquizzes.innerHTML += `
-  <div class="quizz">
+  <div class="quizz" onclick="gerarQuizzDoUsuario(${i})">
     <img src="${quizzproprio.image}"/>
     <div>${quizzproprio.title}</div>
   </div>`
@@ -118,8 +120,11 @@ const ehValidoNumeroDePerguntas = numeroDePerguntas => numeroDePerguntas >= 3;
 const ehValidoNumeroDeNiveis = numeroDeNiveis => numeroDeNiveis >= 2;
 const ehQuizzValido = (titulo, img, perguntas, niveis) => ehValidoTituloDoQuizz(titulo) && ehURLValida(img) && ehValidoNumeroDePerguntas(perguntas) && ehValidoNumeroDeNiveis(niveis);
 
+let contadorQuizzesCriados = 1;
+
 function verificarInformacoesDoQuizz(){
   quizzCriado = {
+    id: contadorQuizzesCriados,
     title: document.querySelector(".title").value,
     image: document.querySelector(".image").value,
     questions: [],
@@ -130,6 +135,13 @@ function verificarInformacoesDoQuizz(){
 
   if(ehQuizzValido(quizzCriado.title, quizzCriado.image, nperguntas, nniveis)){
     criarPerguntas();
+    contadorQuizzesCriados += 1;
+    quizzParaAPI = {
+      title: quizzCriado.title,
+      image: quizzCriado.image,
+      questions: [],
+      levels: []
+      };
   } else {
     alert(`Informações de Quizz inválidas!
     Seu quizz precisa ter um título com mais de 20 e menos de 65 caracteres,
@@ -261,6 +273,7 @@ function salvaPerguntas() {
       perguntascriadas.answers.push(resposta4);
     }
     quizzCriado.questions.push(perguntascriadas);
+    quizzParaAPI.questions.push(perguntascriadas);
   }
   escolherNivel()
 }
@@ -346,9 +359,10 @@ function salvaNiveis (){
       title: `${document.querySelector(`.identify${l} .niveis input:nth-child(2)`).value}`,
       image: `${document.querySelector(`.identify${l} .niveis input:nth-child(4)`).value}`,
       text: `${document.querySelector(`.identify${l} .niveis input:nth-child(5)`).value}`,
-      minValue: `${document.querySelector(`.identify${l} .niveis input:nth-child(3)`).value}`
+      minValue: Number(document.querySelector(`.identify${l} .niveis input:nth-child(3)`).value)
     }
     quizzCriado.levels.push(niveiscriados);
+    quizzParaAPI.levels.push(niveiscriados);
   }
   enviaQuizz()
 }
@@ -357,7 +371,7 @@ function enviaQuizz() {
   j = localStorage.length;
   dadosSerializados = JSON.stringify(quizzCriado);
   localStorage.setItem(`quizz${j}`, dadosSerializados);
-  //let promise = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", quizzCriado);
+  //let promise = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", quizzParaAPI);
   //promise.then(sucessoCriacao);
   //promise.catch(deuRuim)
   sucessoCriacao();
@@ -371,26 +385,34 @@ function sucessoCriacao() {
   tela.innerHTML += `
   <div class="tela3_4">
         <span>Seu quizz está pronto!</span>
-        <div class="quizz">
+        <div class="quizz" onclick="gerarQuizzDoUsuario(${quizzCriado.id})">
             <img
               src="${quizzCriado.image}"
             />
             <div>${quizzCriado.title}</div>
         </div>
-        <div onclick="gerarQuizz()"><button>Acessar Quizz</button></div>
+        <div onclick="gerarQuizzDoUsuario(${quizzCriado.id})"><button>Acessar Quizz</button></div>
         <div class="botaohome" onclick="todosQuizzes()"><button>Voltar pra Home</button></div>
     </div>`
+    console.log(quizzCriado);
+    console.log(quizzParaAPI);
+}
+
+function gerarQuizzDoUsuario(i){
+  let quizzGerado = localStorage.getItem(`quizz${i}`);
+  exibirQuizz(JSON.parse(quizzGerado), true);
 }
 
 function gerarQuizz(idQuizz){
   const promise = axios.get(`https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes/${idQuizz}`)
-  promise.then(exibirQuizz)
+  promise.then(resposta => exibirQuizz(resposta.data, false))
 }
 
 let niveisDoQuizz;
 let idDoQuizz;
-function exibirQuizz(resposta){
-  let quizz = resposta.data;
+let ehQuizzDoUsuario;
+function exibirQuizz(quizz, ehDoUsuario){
+  ehQuizzDoUsuario = ehDoUsuario
   idDoQuizz = quizz.id;
   limpaTela();
   tela.innerHTML += `
@@ -401,7 +423,7 @@ function exibirQuizz(resposta){
   <div class="perguntas">
   </div>`
   gerarPerguntas(quizz.questions);
-  niveisDoQuizz = quizz.levels
+  niveisDoQuizz = quizz.levels;
 }
 
 let alternativas = '';
@@ -409,7 +431,6 @@ let perguntasDoQuizz;
 
 function gerarPerguntas(perguntas){
   perguntasDoQuizz = perguntas.length;
-  perguntas.sort(() => Math.random() - 0.5);
   let questoes = tela.querySelector('.perguntas');
   for (let i = 0; i < perguntas.length; i++){
     gerarRespostas(perguntas[i].answers);
@@ -488,15 +509,13 @@ function rolarParaProximaPergunta(){
 
 function gerarNivel(niveis){
   let acertividade = ((contadorRespostasCorretas/perguntasDoQuizz)*100).toFixed(0);
-  console.log(acertividade);
-  console.log('contador:', contadorRespostasCorretas);
-  console.log('perguntas:', perguntasDoQuizz);
   let pontuacao = 0;
   let nivel = {
     titulo: '',
     img: '',
     descricao: ''
   };
+
   for(let i = 0; i < niveis.length; i++){
     if(acertividade >= niveis[i].minValue && niveis[i].minValue >= pontuacao){
       nivel = {
@@ -512,7 +531,8 @@ function gerarNivel(niveis){
 }
 
 function finalizarQuizz(nivel){
-  tela.innerHTML += `
+  if(ehQuizzDoUsuario){
+    tela.innerHTML += `
   <div class="quizz-finalizado">
       <div class="nivel-quizz">
           <div class="titulo-nivel">
@@ -525,11 +545,39 @@ function finalizarQuizz(nivel){
               </div>
           </div>
       </div>
-      <button class="reiniciar-quizz" onclick="gerarQuizz(${idDoQuizz})">Reiniciar Quizz</button>
+      <button class="reiniciar-quizz" onclick="voltarAoTopo(${true}, ${idDoQuizz - 1})">Reiniciar Quizz</button>
       <button class="voltar-para-home" onclick="todosQuizzes()">Voltar para home</button>
   </div>`;
+  } else {
+    tela.innerHTML += `
+  <div class="quizz-finalizado">
+      <div class="nivel-quizz">
+          <div class="titulo-nivel">
+              <h2>${nivel.titulo}</h2>
+          </div>
+          <div class="img-e-descricao">
+              <img src="${nivel.img}">
+              <div class="descricao-nivel">
+                  <p>${nivel.descricao}</p>
+              </div>
+          </div>
+      </div>
+      <button class="reiniciar-quizz" onclick="voltarAoTopo(${false}, ${idDoQuizz})">Reiniciar Quizz</button>
+      <button class="voltar-para-home" onclick="todosQuizzes()">Voltar para home</button>
+  </div>`;
+  }
   const final = document.querySelector('.quizz-finalizado');
   final.scrollIntoView({
     behavior : 'smooth' 
   });
+}
+
+function voltarAoTopo(quizzDoUsuario, id){
+  if(quizzDoUsuario){
+    gerarQuizzDoUsuario(id);
+    document.querySelector('.titulo-quizz').scrollIntoView();
+  } else {
+    gerarQuizz(id);
+    document.querySelector('.titulo-quizz').scrollIntoView();
+  }
 }

@@ -315,6 +315,7 @@ input:focus{
     height: 217px;
     margin-bottom: 18.61px;
     transition: all 0.3s;
+    cursor: pointer;
 }
 
 .alternativa img {
