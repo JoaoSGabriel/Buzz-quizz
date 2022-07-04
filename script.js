@@ -429,6 +429,7 @@ let alternativas = '';
 let perguntasDoQuizz;
 
 function gerarPerguntas(perguntas){
+  console.log(perguntas)
   perguntasDoQuizz = perguntas.length;
   let questoes = tela.querySelector('.perguntas');
   for (let i = 0; i < perguntas.length; i++){
@@ -443,6 +444,10 @@ function gerarPerguntas(perguntas){
         </div>
       </div>`
       alternativas = '';
+  }
+  let titulos = document.querySelectorAll('.titulo');
+  for(let i = 0; i < titulos.length; i++){
+    titulos[i].style.background = perguntas[i].color;
   }
 }
 
