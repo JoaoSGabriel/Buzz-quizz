@@ -74,7 +74,6 @@ body {
 
 .meuquizz{
     display: flex;
-    overflow-x: scroll;
     width: 1051px;
 }
 
@@ -533,5 +532,67 @@ input:focus{
 }
 
 @media (max-width: 1100px) {
-
+    .comquizz {
+        width: 340px;
+    }
+    .navbar {
+        justify-content: space-between;
+        padding: 0 0 0 0;
+    }
+    .meuquizz {
+        width: 340px;
+        flex-wrap: wrap;
+    }
+    .meuquizz .quizz {
+        margin: 0 0 12px 0;
+    }
+    .quizzes {
+        width: 340px;
+    }
+    .tela3 {
+        text-align: center;
+    }
+    input {
+        width: 90%;
+    }
+    .personalizacao {
+        width: 100%;
+    }
+    .tela3 div,
+    .tela3_2 div,
+    .tela3_3 div {
+        width: 100vw;
+    }
+    .caixadepergunta,
+    .caixapergunta {
+        width: 100%;
+    }
+    .perguntanumero,
+    .caixarespcerta {
+        width: 100%;
+        align-items: center;
+    }
+    .perguntanumero p,
+    .caixarespcerta p{
+        width: 90%;
+    }
+    .caixaresperrada p{
+        width: 90%;
+    }
+    .caixaresperrada {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .caixaresperrada div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .niveis {
+        align-items: center;
+    }
+    .niveis div {
+        width: 90%;
+    }
 }
