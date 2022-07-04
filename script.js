@@ -492,16 +492,16 @@ function selecionarAlternativa(alternativa){
     contadorRespostasCorretas += 1;
   }
   alternativa.parentNode.parentNode.classList.add('respondida');
-  setTimeout(rolarParaProximaPergunta, 2000)
+  rolarParaProximaPergunta();
 }
 
 function rolarParaProximaPergunta(){
   let perguntas = document.querySelectorAll('.pergunta');
     for(let i = 0; i < perguntas.length; i++){
       if(!perguntas[i].classList.contains('respondida')){
-        perguntas[i].scrollIntoView({
+        setTimeout(() => perguntas[i].scrollIntoView({
           behavior : 'smooth' 
-        });
+        }), 2000)
         return
       }
     }
@@ -528,7 +528,7 @@ function gerarNivel(niveis){
     }
   }
   contadorRespostasCorretas = 0;
-  finalizarQuizz(nivel)
+  setTimeout(() => finalizarQuizz(nivel), 2000); 
 }
 
 function finalizarQuizz(nivel){
