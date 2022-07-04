@@ -264,6 +264,7 @@ input:focus{
     color: rgba(255, 255, 255, 1);
     position: absolute;
     top: calc(50% - 19.5px);
+    word-break: break-all;
 
 }
 
@@ -287,7 +288,6 @@ input:focus{
 .titulo {
     width: 90%;
     height: 137.99px;
-    background-color: rgba(67, 76, 160, 1);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -298,6 +298,7 @@ input:focus{
     font-size: 23px;
     font-weight: 700;
     color: rgba(255, 255, 255, 1);
+    word-break: break-all;
 }
 
 .alternativas {
@@ -324,6 +325,7 @@ input:focus{
 
 .alternativa strong {
     font-size: 20px;
+    word-break: break-all;
 }
 
 /* criação do quizz*/
@@ -483,6 +485,7 @@ input:focus{
     font-size: 23px;
     font-weight: 700;
     color: rgba(255, 255, 255, 1);
+    word-break: break-all;
 }
 
 .img-e-descricao {
@@ -504,6 +507,7 @@ input:focus{
 .descricao-nivel p {
     font-size: 19px;
     font-weight: 700;
+    word-break: break-all;
 }
 
 .reiniciar-quizz {
@@ -590,9 +594,16 @@ input:focus{
     }
     .niveis {
         align-items: center;
+        height: 380px;
     }
     .niveis div {
         width: 90%;
+    }
+    .niveis input:nth-child(5) {
+        height: 144px;
+    }
+    .caixaniveis {
+        height: 412px;
     }
     .pergunta {
         width: 100%;
@@ -644,4 +655,5 @@ input:focus{
         width: 100%;
         height: fit-content;
     }
+    
 }

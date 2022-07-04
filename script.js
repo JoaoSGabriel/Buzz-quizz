@@ -28,6 +28,7 @@ function todosQuizzes () {
 
 function selecionaQuizz(resposta) {
   quizzAleatorio = resposta.data;
+  console.log(quizzAleatorio)
   if (localStorage.length == 0){
     geradorTela1_1 ();
   } else {
@@ -370,9 +371,9 @@ function enviaQuizz() {
   j = localStorage.length;
   dadosSerializados = JSON.stringify(quizzCriado);
   localStorage.setItem(`quizz${j}`, dadosSerializados);
-  //let promise = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", quizzParaAPI);
-  //promise.then(sucessoCriacao);
-  //promise.catch(deuRuim)
+  let promise = axios.post("https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes", quizzParaAPI);
+  promise.then(sucessoCriacao);
+  promise.catch(deuRuim)
   sucessoCriacao();
 }
 
@@ -429,7 +430,6 @@ let alternativas = '';
 let perguntasDoQuizz;
 
 function gerarPerguntas(perguntas){
-  console.log(perguntas)
   perguntasDoQuizz = perguntas.length;
   let questoes = tela.querySelector('.perguntas');
   for (let i = 0; i < perguntas.length; i++){
