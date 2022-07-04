@@ -370,9 +370,9 @@ function enviaQuizz() {
   j = localStorage.length;
   dadosSerializados = JSON.stringify(quizzCriado);
   localStorage.setItem(`quizz${j}`, dadosSerializados);
-  //let promise = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", quizzParaAPI);
-  //promise.then(sucessoCriacao);
-  //promise.catch(deuRuim)
+  let promise = axios.post("https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes", quizzParaAPI);
+  promise.then(sucessoCriacao);
+  promise.catch(deuRuim)
   sucessoCriacao();
 }
 

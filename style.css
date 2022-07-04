@@ -591,8 +591,15 @@ input:focus{
     }
     .niveis {
         align-items: center;
+        height: 380px;
     }
     .niveis div {
         width: 90%;
+    }
+    .niveis input:nth-child(5) {
+        height: 144px;
+    }
+    .caixaniveis {
+        height: 412px;
     }
 }
