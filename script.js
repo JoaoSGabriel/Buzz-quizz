@@ -73,7 +73,6 @@ function geradorTela1_2 () {
 
   let userquizz = localStorage.getItem(`quizz${i}`);
   let quizzproprio = JSON.parse(userquizz);
-  
   let meusquizzes = document.querySelector(".meuquizz");
   meusquizzes.innerHTML += `
   <div class="quizz">
