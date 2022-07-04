@@ -22,7 +22,6 @@ body {
     z-index: 1;
 }
 
-/* organização da tela1-1 e tela1-2 */
 .semquizz {
     width: 1051px;
     height: 181px;
@@ -158,7 +157,6 @@ body {
     z-index: -1;
 }
 
-/* organização da tela3 */
 .tela3,
 .tela3_2,
 .tela3_3,
@@ -327,7 +325,6 @@ input:focus{
     font-size: 20px;
 }
 
-/* criação do quizz*/
 .tela3_2 span,
 .tela3_3 span,
 .tela3_4 span{
@@ -532,24 +529,51 @@ input:focus{
 }
 
 @media (max-width: 1100px) {
+    .tela3 button,
+    .tela3_2 button,
+    .tela3_3 button,
+    .tela3_4 button {
+        width: 324px;
+    }
+    .semquizz {
+        width: 90%;
+    }
     .comquizz {
-        width: 340px;
+        width: 100%;
+        flex-wrap: unset;
+        flex-direction: column;
+        align-items: center;
     }
     .navbar {
         justify-content: space-between;
         padding: 0 0 0 0;
+        width: 90%;
     }
     .meuquizz {
-        width: 340px;
-        flex-wrap: wrap;
+        width: 90%;
     }
     .meuquizz .quizz {
         margin: 0 0 12px 0;
     }
     .quizzes {
-        width: 340px;
+        width: 100%;
+        flex-wrap: unset;
+        flex-direction: column;
+        align-items: center;
+        height: auto;
     }
-    .tela3 {
+    .quizzes p{
+        width: 90%;
+    }
+    .quizz {
+        width: 90vw;
+    }
+    .quizz img {
+        width: 100%;
+    }
+    .tela3,
+    .tela3_2,
+    .tela3_3 {
         text-align: center;
     }
     input {
@@ -563,6 +587,7 @@ input:focus{
     .tela3_3 div {
         width: 100vw;
     }
+    
     .caixadepergunta,
     .caixapergunta {
         width: 100%;
@@ -575,9 +600,11 @@ input:focus{
     .perguntanumero p,
     .caixarespcerta p{
         width: 90%;
+        text-align: start;
     }
     .caixaresperrada p{
         width: 90%;
+        text-align: start;
     }
     .caixaresperrada {
         display: flex;
@@ -595,6 +622,7 @@ input:focus{
     }
     .niveis div {
         width: 90%;
+        text-align: start;
     }
     .niveis input:nth-child(5) {
         height: 144px;
@@ -602,4 +630,58 @@ input:focus{
     .caixaniveis {
         height: 412px;
     }
+    .pergunta {
+        width: 100%;
+        height: auto;
+    }
+    .alternativas {
+        height: 80%;
+    }
+    .alternativa {
+        width: 48%;
+        height: 30%;
+    }
+    .alternativa img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+    }
+    .alternativa strong {
+        font-size: 13px;
+    }
+    .titulo {
+        width: 90%;
+        height: 89px;
+    }
+    .titulo-quizz {
+        height: 142px;
+    }
+    .nivel-quizz {
+        width: 100%;
+        height: fit-content;
+    }
+    .titulo-nivel {
+        width: 90%;
+    }
+    .titulo-nivel h2 {
+        font-size: 19px;
+    }
+    .img-e-descricao {
+        width: 90%;
+        flex-direction: column;
+        justify-content: none;
+    }
+    .img-e-descricao img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+    }
+    .descricao-nivel {
+        width: 100%;
+        height: fit-content;
+    }
+    .encolhida {
+        display: none;
+    }
+    
 }
